@@ -14,12 +14,7 @@ body {
   scrollbar-width: none;
 }
 
-.active-step {
-  background-color: #1e40af;
-  color: white;
-  border-color: #1e40af;
-}
-
+/* Animation */
 .ai-loading {
   animation: pulse 1.5s infinite;
 }
@@ -34,12 +29,6 @@ body {
   50% {
     opacity: .5;
   }
-}
-
-textarea:focus {
-  border-color: #2563eb;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
 /* Toast Notification */
@@ -65,4 +54,28 @@ textarea:focus {
 .toast.show {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Default Theme (Case Presentation - Blue) */
+.active-step {
+  background-color: #1e40af;
+  color: white;
+  border-color: #1e40af;
+}
+
+textarea:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* Indigo Theme (Daily Snap) */
+body.theme-indigo .active-step {
+  background-color: #312e81;
+  border-color: #312e81;
+}
+
+body.theme-indigo textarea:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
 }

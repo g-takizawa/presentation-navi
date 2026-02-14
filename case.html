@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>症例プレゼン (H&P)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="flex flex-col h-screen overflow-hidden text-slate-800">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 px-6 py-3 flex-none shadow-sm z-20">
+    <div class="max-w-screen-2xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="text-slate-400 hover:text-slate-600 mr-2 transition-colors" title="Home">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          </svg>
+        </a>
+        <div class="bg-slate-900 text-white p-2 rounded-lg font-bold text-lg">H&P</div>
+        <div>
+          <h1 class="text-lg font-bold">症例プレゼン・ワークブック</h1>
+          <p class="text-[10px] text-slate-500 font-medium uppercase tracking-tighter">全ステップ統合ダウンロード機能搭載</p>
+        </div>
+      </div>
+
+      <div class="hidden lg:flex items-center gap-1" id="step-nav-bar">
+        <!-- Nav steps -->
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="downloadFullDraft()"
+          class="bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm font-bold hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-sm">
+          💾 全原稿をダウンロード
+        </button>
+        <button onclick="toggleSettings()" class="p-2 text-slate-400 hover:text-blue-600 transition-colors">⚙️</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex overflow-hidden max-w-screen-2xl mx-auto w-full p-4 gap-4">
+
+    <!-- Left Pane: Reference -->
+    <section class="w-1/2 flex flex-col gap-4 overflow-y-auto no-scrollbar pb-6">
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex-none">
+        <div class="flex items-center justify-between mb-4">
+          <span id="step-label"
+            class="text-[10px] font-bold bg-blue-100 text-blue-700 px-2 py-1 rounded uppercase tracking-widest">Step
+            1</span>
+          <span id="step-time" class="text-xs text-slate-400 font-mono">30s</span>
+        </div>
+        <h2 id="step-title" class="text-2xl font-bold mb-2"></h2>
+        <p id="step-rule" class="text-sm text-slate-600 leading-relaxed"></p>
+      </div>
+
+      <div class="bg-amber-50 rounded-xl border border-amber-200 p-6 flex-1 flex flex-col">
+        <h3 class="text-xs font-bold text-amber-800 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <span class="w-2 h-2 bg-amber-500 rounded-full"></span> 臨床現場でのお手本
+        </h3>
+        <div id="step-example"
+          class="text-slate-900 leading-relaxed italic text-sm mb-6 border-l-4 border-amber-300 pl-4 py-2 bg-white rounded shadow-sm">
+          <!-- Example content -->
+        </div>
+
+        <h4 class="text-xs font-bold text-slate-500 mb-3 border-t border-amber-200 pt-4 uppercase tracking-widest">
+          Clinical Tips</h4>
+        <div id="step-tips" class="space-y-3">
+          <!-- Tip list -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Pane: Workspace -->
+    <section class="w-1/2 flex flex-col gap-4">
+      <div class="bg-white rounded-xl shadow-lg border border-blue-200 flex-1 flex flex-col overflow-hidden">
+        <div class="p-4 bg-blue-50 border-b border-blue-100 flex justify-between items-center flex-none">
+          <h3 class="text-xs font-bold text-blue-800 uppercase tracking-widest">Your Draft</h3>
+          <div class="flex gap-2">
+            <button onclick="aiCritique()"
+              class="bg-white text-blue-600 px-3 py-1 rounded border border-blue-200 text-xs font-bold hover:bg-blue-100 transition-colors">✨
+              AI添削</button>
+          </div>
+        </div>
+        <textarea id="draft-input" oninput="saveDraft()"
+          class="flex-1 p-6 text-base leading-relaxed text-slate-800 outline-none resize-none placeholder:text-slate-300"
+          placeholder="お手本を参考に、自分の担当症例について書き込んでください..."></textarea>
+
+        <div id="ai-output"
+          class="hidden p-4 bg-slate-900 text-white text-sm border-t border-slate-700 max-h-48 overflow-y-auto flex-none">
+          <div id="ai-loading" class="ai-loading text-blue-400 font-bold mb-2">Geminiが解析中...</div>
+          <div id="ai-text" class="text-xs leading-relaxed"></div>
+          <button onclick="closeAI()" class="mt-2 text-[10px] text-slate-500 underline">閉じる</button>
+        </div>
+
+        <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center flex-none">
+          <button onclick="prevStep()" id="btn-prev"
+            class="text-sm font-bold text-slate-400 hover:text-slate-800 disabled:opacity-30">← PREV</button>
+          <span id="char-count" class="text-[10px] text-slate-400 font-mono tracking-widest">0 CHARS</span>
+          <button onclick="nextStep()" id="btn-next"
+            class="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors shadow-sm">NEXT
+            →</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal"
+    class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl relative">
+      <h3 class="text-xl font-bold mb-2">設定 & API</h3>
+
+      <div class="mb-6">
+        <label class="block text-xs text-slate-500 mb-2">Gemini API Key</label>
+        <input type="password" id="api-key-input" class="w-full p-3 border rounded-lg text-sm" placeholder="AIzaSy...">
+        <p class="text-[10px] text-slate-400 mt-1">※キーはブラウザ内にのみ保存されます</p>
+      </div>
+
+      <div class="flex gap-2 mb-6">
+        <button onclick="saveApiKey()"
+          class="flex-1 bg-blue-600 text-white py-2.5 rounded-lg font-bold hover:bg-blue-700 transition-colors">APIキーを保存</button>
+      </div>
+
+      <div class="border-t border-slate-100 pt-6">
+        <h4 class="text-sm font-bold text-red-600 mb-2">Danger Zone</h4>
+        <button onclick="clearAllData()"
+          class="w-full text-red-500 border border-red-200 bg-red-50 py-2 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors">
+          ⚠️ 全ての原稿データを消去
+        </button>
+      </div>
+
+      <button onclick="toggleSettings()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">✕</button>
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        label: "Step 1", title: "Opening Statement", time: "30s",
+        rule: "年齢、性別、最重要既往（今回の問題に関連するもの）、主訴を1文で。聴衆が瞬時に臨床的イメージを構築できることが目標。",
+        example: "「2型糖尿病の既往があり、喫煙歴を有する77歳男性。3日前からの湿性咳嗽と呼吸困難を主訴に来院されました。」",
+        tips: ["既往歴として糖尿病がある場合、感染症への感受性やステロイド使用の難しさを示唆するため、Openingで提示すべきです。", "名前は不要。医学的なプロファイルのみ提示。"],
+        key: "final_workbook_step_1"
+      },
+      {
+        label: "Step 2", title: "現病歴 (HPI)", time: "2:30",
+        rule: "受診までの経過を『相対時間（〜日前）』で語る。症状の性状(OPQRST)に加え、起坐呼吸などの重要な陰性所見を配置する。",
+        example: "「3日前より湿性咳嗽が出現し、2日前より労作時呼吸困難を認めました。昨日より発熱、食思不振、体動困難となり受診。起坐呼吸、冷汗、下肢浮腫などは認めません。糖尿病の自己管理は良好でした。」",
+        tips: ["食思不振・体動困難の提示は『重症度』の強力な証拠。", "心不全を否定するための陰性所見（起坐呼吸なし等）を必ず含める。"],
+        key: "final_workbook_step_2"
+      },
+      {
+        label: "Step 3", title: "既往歴・併存症", time: "30s",
+        rule: "今回の鑑別に関連するものを優先。カルテには全て記載するが、プレゼンでは情報の取捨選択を行う。薬剤歴、アレルギーも含める。",
+        example: "「既往に2型糖尿病（罹病期間10年）、高血圧があります。内服はメトホルミン、ダパグリフロジン、アムロジピン。薬剤アレルギーはありません。」",
+        tips: ["メトホルミンとSGLT2阻害薬（ダパグリフロジン）は、急性期やステロイド使用時に中止・インスリン切り替えの検討が必要な重要薬剤です。"],
+        key: "final_workbook_step_3"
+      },
+      {
+        label: "Step 4", title: "生活歴 (Social History)", time: "30s",
+        rule: "呼吸器疾患では特に重要。喫煙歴（Brinkman Index + 現喫煙状況）、職業、ペット、住環境など。",
+        example: "「喫煙歴は1日20本×55年、現喫煙者。職歴は事務職。粉塵暴露歴や鳥類の飼育歴はありません。」",
+        tips: ["COPDを疑う場合『現喫煙者であること』を明記するのが重要です。"],
+        key: "final_workbook_step_4"
+      },
+      {
+        label: "Step 5", title: "身体所見 (Objective)", time: "1:00",
+        rule: "バイタルと全身状態から開始。鑑別に関係するシステム（呼吸器・循環器）を中心に。正常であることを期待する『陰性所見』も明言する。",
+        example: "「BP 140/85, HR 95, BT 38.2, RR 24, SpO2 88%(RA)。軽度苦悶様。両肺野にwheezesを聴取。JVP怒張なし、下肢浮腫なし。」",
+        tips: ["wheezesの存在を強調。", "心不全を否定する陰性所見（JVP・浮腫なし）をあえて明言し、肺病変への確信を示す。"],
+        key: "final_workbook_step_5"
+      },
+      {
+        label: "Step 6", title: "検査所見 (Labs/Imaging)", time: "1:00",
+        rule: "異常値のみ。画像は『どこに何があるか』を言語化。D-dimer/BNP陰性など、臨床推論の鍵を出す。",
+        example: "「X線で過膨張を認めますが浸潤影なし。CTで気腫性変化と気管支壁肥厚を認めます。PaO2低下、PaCO2 48mmHg。D-dimerおよびBNPは正常範囲内です。」",
+        tips: ["BNP/D-dimerが正常であることは、アセスメントで心不全/PEを論理的に否定するための強力な証拠です。"],
+        key: "final_workbook_step_6"
+      },
+      {
+        label: "Step 7", title: "プロブレムリスト", time: "30s",
+        rule: "確定していない診断名は書かず、症候名で記載。主訴に関連する項目を #1 に挙げる。",
+        example: "「#1. wheezesを伴うII型急性呼吸不全、#2. 2型糖尿病、#3. 喫煙歴 です。」",
+        tips: ["未診断の段階で #1 COPD急性増悪 と書かない。Tunnel Visionを避けるため。"],
+        key: "final_workbook_step_7"
+      },
+      {
+        label: "Step 8", title: "アセスメント", time: "2:00",
+        rule: "Summary Statementから開始。最も可能性の高い診断の根拠、次いで鑑別（除外した理由）を論理的に語る。",
+        example: "「喫煙歴、気腫性変化、wheezesから、背景にCOPDが存在し、感染による急性増悪（AE-COPD）を第一に考えます。心不全や肺塞栓症は否定的です。#2 についてはステロイド使用による高血糖増悪リスクを考慮します。」",
+        tips: ["『〜と考えます』と断定的に述べる。", "併存症（糖尿病）への配慮を含めることで、臨床医としての視点の広さを示せます。"],
+        key: "final_workbook_step_8"
+      },
+      {
+        label: "Step 9", title: "プラン", time: "30s",
+        rule: "診断・治療・教育プランを具体的に。特に糖尿病薬の具体的調整（中止薬・代替療法）を明記する。",
+        example: "「SpO2 88-92%目標で酸素投与。ABC療法（抗菌薬・吸入・ステロイド）開始。#2 はメトホルミン・ダパグリフロジンを中止し、入院中はインスリン対応。改善後に禁煙指導を行います。」",
+        tips: ["SGLT2阻害薬の中止はシックデイ予防に重要。", "禁煙やワクチン等の予防的介入を含めるのが岸本メソッド。"],
+        key: "final_workbook_step_9"
+      }
+    ];
+  </script>
+  <script src="script.js"></script>
+</body>
+
+</html>

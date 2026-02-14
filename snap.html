@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1分間デイリープレゼン (Snap)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="flex flex-col h-screen overflow-hidden text-slate-800 theme-indigo">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 px-6 py-3 flex-none shadow-sm z-20">
+    <div class="max-w-screen-2xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="text-slate-400 hover:text-indigo-600 mr-2 transition-colors" title="Home">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          </svg>
+        </a>
+        <div class="bg-indigo-900 text-white p-2 rounded-lg font-bold text-lg">Snap</div>
+        <div>
+          <h1 class="text-lg font-bold">1分間デイリープレゼン</h1>
+          <p class="text-[10px] text-slate-500 font-medium uppercase tracking-tighter">回診・チーム共有用ショートバージョン</p>
+        </div>
+      </div>
+
+      <div class="hidden lg:flex items-center gap-1" id="step-nav-bar">
+        <!-- Navigation -->
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="downloadFullDraft()"
+          class="bg-indigo-600 text-white px-4 py-1.5 rounded-md text-sm font-bold hover:bg-indigo-700 transition-colors flex items-center gap-2 shadow-sm">
+          💾 保存
+        </button>
+        <button onclick="toggleSettings()"
+          class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">⚙️</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex overflow-hidden max-w-screen-2xl mx-auto w-full p-4 gap-4">
+
+    <!-- Left Pane: Reference -->
+    <section class="w-1/2 flex flex-col gap-4 overflow-y-auto no-scrollbar pb-6">
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex-none">
+        <div class="flex items-center justify-between mb-4">
+          <span id="step-label"
+            class="text-[10px] font-bold bg-indigo-100 text-indigo-700 px-2 py-1 rounded uppercase tracking-widest">Step
+            1</span>
+          <span id="step-time" class="text-xs text-slate-400 font-mono">10s</span>
+        </div>
+        <h2 id="step-title" class="text-2xl font-bold mb-2"></h2>
+        <p id="step-rule" class="text-sm text-slate-600 leading-relaxed"></p>
+      </div>
+
+      <div class="bg-indigo-50/50 rounded-xl border border-indigo-100 p-6 flex-1 flex flex-col">
+        <h3 class="text-xs font-bold text-indigo-800 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <span class="w-2 h-2 bg-indigo-500 rounded-full"></span> 入院3日目の経過プレゼン例
+        </h3>
+        <div id="step-example"
+          class="text-slate-900 leading-relaxed italic text-sm mb-6 border-l-4 border-indigo-300 pl-4 py-2 bg-white rounded shadow-sm">
+          <!-- Example content -->
+        </div>
+
+        <h4 class="text-xs font-bold text-slate-500 mb-3 border-t border-indigo-100 pt-4 uppercase tracking-widest">
+          Focus Points</h4>
+        <div id="step-tips" class="space-y-3">
+          <!-- Tip list -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Pane: Workspace -->
+    <section class="w-1/2 flex flex-col gap-4">
+      <div class="bg-white rounded-xl shadow-lg border border-indigo-200 flex-1 flex flex-col overflow-hidden">
+        <div class="p-4 bg-indigo-50 border-b border-indigo-100 flex justify-between items-center flex-none">
+          <h3 class="text-xs font-bold text-indigo-800 uppercase tracking-widest">Daily Progress Draft</h3>
+          <button onclick="aiCritique()"
+            class="bg-white text-indigo-600 px-3 py-1 rounded border border-indigo-200 text-xs font-bold hover:bg-indigo-100 transition-colors">✨
+            AI添削</button>
+        </div>
+        <textarea id="draft-input" oninput="saveDraft()"
+          class="flex-1 p-6 text-base leading-relaxed text-slate-800 outline-none resize-none placeholder:text-slate-300"
+          placeholder="変化点に絞って入力してください..."></textarea>
+
+        <div id="ai-output"
+          class="hidden p-4 bg-slate-900 text-white text-sm border-t border-slate-700 max-h-48 overflow-y-auto flex-none">
+          <div id="ai-loading" class="ai-loading text-indigo-400 font-bold mb-2">Gemini 添削中...</div>
+          <div id="ai-text" class="text-xs leading-relaxed"></div>
+          <button onclick="closeAI()" class="mt-2 text-[10px] text-slate-500 underline">閉じる</button>
+        </div>
+
+        <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center flex-none">
+          <button onclick="prevStep()" id="btn-prev"
+            class="text-sm font-bold text-slate-400 hover:text-slate-800 disabled:opacity-30">← PREV</button>
+          <span id="char-count" class="text-[10px] text-slate-400 font-mono tracking-widest uppercase">0 chars</span>
+          <button onclick="nextStep()" id="btn-next"
+            class="bg-indigo-800 text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-indigo-700 transition-colors shadow-sm">NEXT
+            →</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal"
+    class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl relative">
+      <h3 class="text-xl font-bold mb-2">API設定</h3>
+      <div class="mb-6">
+        <label class="block text-xs text-slate-500 mb-2">Gemini API Key</label>
+        <input type="password" id="api-key-input" class="w-full p-3 border rounded-lg text-sm" placeholder="AIzaSy...">
+        <p class="text-[10px] text-slate-400 mt-1">※キーはブラウザ内にのみ保存されます</p>
+      </div>
+
+      <div class="flex gap-2 mb-6">
+        <button onclick="saveApiKey()"
+          class="flex-1 bg-indigo-600 text-white py-2.5 rounded-lg font-bold hover:bg-indigo-700 transition-colors">保存</button>
+      </div>
+
+      <div class="border-t border-slate-100 pt-6">
+        <h4 class="text-sm font-bold text-red-600 mb-2">Danger Zone</h4>
+        <button onclick="clearAllData()"
+          class="w-full text-red-500 border border-red-200 bg-red-50 py-2 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors">
+          ⚠️ 現在の原稿データを消去
+        </button>
+      </div>
+
+      <button onclick="toggleSettings()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">✕</button>
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        label: "Step 1", title: "Summary (One-liner)", time: "10s",
+        rule: "どの患者の何日目かを同期する。名前、主病名、経過日数（入院、術後、抗菌薬）を簡潔に。",
+        example: "「COPD急性増悪で入院3日目の77歳男性、Aさんです。抗菌薬（CTRX）は3日目です。」",
+        tips: ["『抗菌薬○日目』を明示することで、中止やスイッチの議論がしやすくなります。", "既往や主訴の詳細は、変化に関係なければ省きます。"],
+        key: "snap_step_1"
+      },
+      {
+        label: "Step 2", title: "Update (S/O Changes)", time: "30s",
+        rule: "夜間のイベントと、客観的データのトレンドを伝える。正常値の羅列を避け、変化点にフォーカスする。",
+        example: "「夜間イベントなし。湿性咳嗽・喀痰は減少傾向。SpO2 92%(0.5L)で安定。朝の採血で炎症反応も低下。血糖はSS対応にて180〜220で推移しています。」",
+        tips: ["『安定』『改善傾向』など、トレンドを示す言葉を使います。", "糖尿病併存例では、当日の血糖値推移を必ず含めます。"],
+        key: "snap_step_2"
+      },
+      {
+        label: "Step 3", title: "Assessment (Current Status)", time: "15s",
+        rule: "現状の評価を述べる。改善、不変、悪化のいずれかを明確にする。",
+        example: "「呼吸状態は改善傾向です。II型呼吸不全も安定しており、ステロイドによる血糖上昇もコントロール範囲内と判断します。」",
+        tips: ["『〜だと思います』ではなく『〜と判断します/評価します』と言い切ります。"],
+        key: "snap_step_3"
+      },
+      {
+        label: "Step 4", title: "Plan (Today's Tasks)", time: "15s",
+        rule: "今日の具体的なタスク（指示変更）を提案し、承認を得る。",
+        example: "「本日より酸素オフを試行します。食事摂取良好なため、抗菌薬を内服（AMPC/CVA）に切り替えることを提案します。」",
+        tips: ["『何か指示ありますか？』ではなく、『〜しようと思います』と自分からプランをぶつけます。"],
+        key: "snap_step_4"
+      }
+    ];
+  </script>
+  <script src="script.js"></script>
+</body>
+
+</html>
