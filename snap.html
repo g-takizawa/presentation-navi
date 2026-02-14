@@ -28,7 +28,8 @@
         <div class="bg-indigo-900 text-white p-2 rounded-lg font-bold text-lg leading-none">P-A/P</div>
         <div>
           <h1 class="text-lg font-bold">プロブレム別デイリーワークブック</h1>
-          <p class="text-[10px] text-slate-500 font-medium uppercase tracking-tighter">プロブレム毎のアセスメントとプランの提示</p>
+          <p class="hidden sm:block text-[10px] text-slate-500 font-medium uppercase tracking-tighter">
+            プロブレム毎のアセスメントとプランの提示</p>
         </div>
       </div>
 
@@ -38,8 +39,8 @@
 
       <div class="flex items-center gap-3">
         <button onclick="downloadFullDraft()"
-          class="bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-indigo-800 transition-all flex items-center gap-2 shadow-sm">
-          💾 全原稿を出力
+          class="bg-indigo-700 text-white px-3 sm:px-4 py-2 rounded-md text-sm font-bold hover:bg-indigo-800 transition-all flex items-center gap-2 shadow-sm">
+          💾 <span class="hidden sm:inline">全原稿を出力</span>
         </button>
         <button onclick="toggleSettings()"
           class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">⚙️</button>
@@ -180,7 +181,7 @@
       {
         label: "Step 4", title: "Problem #2: A & P", time: "30s",
         rule: "併存症や入院中に発生した問題（副作用等）への評価とプランを述べる。",
-        example: "「#2 2型糖尿病は、ステロイドによる高血糖を認めるもののスライディングスケールで管理可能です。スライディングスケールをSSを継続し、食事摂取が安定すれば内服再開を検討します。」",
+        example: "「#2 2型糖尿病は、ステロイドによる高血糖を認めるもののスライディングスケールで管理可能です。スライディングスケールを継続し、食事摂取が安定すれば内服再開を検討します。」",
         tips: ["主病名の影に隠れがちな『併存症』の管理状況を報告することで、チームの安心感が高まります。"],
         key: "ap_snap_step_4"
       },
