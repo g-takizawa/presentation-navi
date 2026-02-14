@@ -48,10 +48,11 @@
   </header>
 
   <!-- Main Content -->
-  <main class="flex-1 flex overflow-hidden max-w-screen-2xl mx-auto w-full p-4 gap-4">
+  <main
+    class="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden max-w-screen-2xl mx-auto w-full p-4 gap-4">
 
     <!-- Left Pane: Guidance -->
-    <section class="w-1/2 flex flex-col gap-4 overflow-y-auto no-scrollbar pb-6">
+    <section class="w-full lg:w-1/2 flex flex-col gap-4 overflow-y-auto no-scrollbar pb-6 min-h-[40vh] lg:min-h-0">
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex-none">
         <div class="flex items-center justify-between mb-4">
           <span id="step-label"
@@ -81,7 +82,7 @@
     </section>
 
     <!-- Right Pane: Resident Input -->
-    <section class="w-1/2 flex flex-col gap-4">
+    <section class="w-full lg:w-1/2 flex flex-col gap-4 min-h-[50vh] lg:min-h-0">
       <div class="bg-white rounded-xl shadow-lg border border-indigo-200 flex-1 flex flex-col overflow-hidden">
         <div class="p-4 bg-indigo-50 border-b border-indigo-100 flex justify-between items-center flex-none">
           <h3 class="text-xs font-bold text-indigo-800 uppercase tracking-widest">Active Problem Draft</h3>
