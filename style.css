@@ -69,7 +69,7 @@ textarea:focus {
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
-/* Indigo Theme (Daily Snap) */
+/* Indigo Theme (Daily Snap - Deprecated but kept for compatibility if needed) */
 body.theme-indigo .active-step {
   background-color: #312e81;
   border-color: #312e81;
@@ -78,4 +78,17 @@ body.theme-indigo .active-step {
 body.theme-indigo textarea:focus {
   border-color: #4f46e5;
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+}
+
+/* Problem-Oriented Theme (Slate/Indigo/Rose) */
+body.theme-problem .active-step {
+  background-color: #1e1b4b;
+  /* Indigo 950 */
+  border-color: #1e1b4b;
+}
+
+body.theme-problem textarea:focus {
+  border-color: #4338ca;
+  /* Indigo 700 */
+  box-shadow: 0 0 0 2px rgba(67, 56, 202, 0.1);
 }

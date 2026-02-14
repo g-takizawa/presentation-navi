@@ -143,11 +143,14 @@ async function aiCritique() {
   if (textEl) textEl.innerText = "";
 
   try {
+    const systemInstruction = window.aiSystemPrompt || "あなたは親切な指導医です。";
+
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: `以下の医学プレゼン原稿を添削してください。\nセクション：${steps[currentIdx].title}\n役割：指導医\n\n原稿：${draft}` }] }]
+        systemInstruction: { parts: [{ text: systemInstruction }] },
+        contents: [{ parts: [{ text: `以下の医学プレゼン原稿を添削してください。\nセクション：${steps[currentIdx].title}\n\n原稿：${draft}` }] }]
       })
     });
     const data = await response.json();
