@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>症例プレゼン モデル原稿</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background-color: #f1f5f9;
+    }
+  </style>
+</head>
+
+<body class="flex flex-col min-h-screen text-slate-800">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 px-6 py-3 flex-none shadow-sm sticky top-0 z-20">
+    <div class="max-w-screen-md mx-auto flex items-center justify-between w-full">
+      <div class="flex items-center gap-3">
+        <a href="index.html"
+          class="flex items-center gap-1 text-slate-500 hover:text-blue-600 mr-4 transition-colors font-bold text-sm"
+          title="トップページへ戻る">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          </svg>
+          Home
+        </a>
+        <div class="flex items-center gap-2">
+          <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-0.5 rounded">Model</span>
+          <h1 class="text-lg font-bold text-slate-900">モデル原稿</h1>
+        </div>
+      </div>
+
+      <a href="case.html" class="text-sm font-bold text-blue-600 hover:text-blue-800">ワークブックを開く →</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-screen-md mx-auto w-full p-4 md:p-8">
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-8">
+      <div class="bg-amber-50 border-b border-amber-100 p-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-600 font-bold text-xs uppercase tracking-widest">Case Study</span>
+          <span class="text-slate-400 font-mono text-xs">ID: 001</span>
+        </div>
+        <h2 class="text-2xl font-bold text-slate-900 mb-2">77歳男性 呼吸困難と湿性咳嗽</h2>
+        <p class="text-slate-500 text-sm">主訴：呼吸困難、湿性咳嗽 / 診断：COPD急性増悪</p>
+      </div>
+
+      <div class="p-6 md:p-10 space-y-8">
+
+        <section>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-slate-200 text-slate-600 font-bold text-[10px] px-1.5 py-0.5 rounded uppercase">Step
+              1</span>
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest">Opening Statement</h3>
+          </div>
+          <p class="text-slate-800 leading-relaxed text-lg border-l-4 border-amber-200 pl-4">
+            「2型糖尿病の既往があり、喫煙歴を有する77歳男性。3日前からの湿性咳嗽と呼吸困難を主訴に来院されました。」
+          </p>
+        </section>
+
+        <section>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-slate-200 text-slate-600 font-bold text-[10px] px-1.5 py-0.5 rounded uppercase">Step
+              2</span>
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest">現病歴 (HPI)</h3>
+          </div>
+          <p class="text-slate-800 leading-relaxed">
+            「3日前より湿性咳嗽が出現し、2日前より労作時呼吸困難を認めました。昨日より発熱、食思不振、体動困難となり受診。起坐呼吸、冷汗、下肢浮腫などは認めません。糖尿病の自己管理は良好でした。」
+          </p>
+        </section>
+
+        <section>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-slate-200 text-slate-600 font-bold text-[10px] px-1.5 py-0.5 rounded uppercase">Step
+              3-4</span>
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest">既往歴・併存症 & 生活歴</h3>
+          </div>
+          <p class="text-slate-800 leading-relaxed">
+            「併存症に2型糖尿病（罹病期間10年）、高血圧があります。内服はメトホルミン、ダパグリフロジン、アムロジピン。薬剤アレルギーはありません。
+            <br><br>
+            喫煙歴は1日20本×55年、現喫煙者。職歴は事務職。粉塵暴露歴や鳥類の飼育歴はありません。」
+          </p>
+        </section>
+
+        <section>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-slate-200 text-slate-600 font-bold text-[10px] px-1.5 py-0.5 rounded uppercase">Step
+              5-6</span>
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest">身体所見 & 検査所見</h3>
+          </div>
+          <p class="text-slate-800 leading-relaxed">
+            「BP 140/85, HR 95, BT 38.2, RR 24, SpO2 88%(RA)。軽度苦悶様。両肺野にwheezesを聴取。JVP怒張なし、下肢浮腫なし。
+            <br><br>
+            X線で過膨張を認めますが浸潤影なし。CTで気腫性変化と気管支壁肥厚を認めます。PaO2低下、PaCO2 48mmHg、WBC1100、CRPは8と上昇。D-dimerおよびBNPは正常範囲内です。」
+          </p>
+        </section>
+
+        <section>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-slate-200 text-slate-600 font-bold text-[10px] px-1.5 py-0.5 rounded uppercase">Step
+              7</span>
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest">プロブレムリスト</h3>
+          </div>
+          <ul class="text-slate-800 leading-relaxed list-none font-bold bg-slate-50 p-4 rounded-lg">
+            <li>#1. wheezesを伴うII型急性呼吸不全</li>
+            <li>#2. 2型糖尿病</li>
+            <li>#3. 喫煙歴</li>
+          </ul>
+        </section>
+
+        <section>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-slate-200 text-slate-600 font-bold text-[10px] px-1.5 py-0.5 rounded uppercase">Step
+              8</span>
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest">アセスメント</h3>
+          </div>
+          <p class="text-slate-800 leading-relaxed">
+            「喫煙歴、気腫性変化、wheezesから、背景にCOPDが存在し、感染による急性増悪（AE-COPD）を第一に考えます。心不全や肺塞栓症は否定的です。#2
+            についてはステロイド使用による高血糖増悪リスクを考慮します。」
+          </p>
+        </section>
+
+        <section>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-slate-200 text-slate-600 font-bold text-[10px] px-1.5 py-0.5 rounded uppercase">Step
+              9</span>
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest">プラン</h3>
+          </div>
+          <p class="text-slate-800 leading-relaxed">
+            「SpO2
+            88-92%目標で酸素投与。喀痰検査提出後にABC療法（抗菌薬はセフトリアキソン2g/day・SA吸入・ステロイドはソル・メドロール40mgx3/day）開始し病態が安定すればLABA/LAMA吸入薬の導入を検討します。
+            <br><br>
+            #2 はメトホルミン・ダパグリフロジンを中止し、スライディングスケール対応とし、経口摂取が安定すれば経口薬に変更予定。禁煙指導と退院前に必要なワクチン接種について説明を行います。」
+          </p>
+        </section>
+
+      </div>
+
+      <div class="bg-slate-50 border-t border-slate-100 p-6 text-center">
+        <p class="text-slate-500 text-sm mb-4">このモデルケースを参考に、自分の担当症例を作成してみましょう。</p>
+        <a href="case.html"
+          class="inline-flex items-center justify-center bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-blue-500/30">
+          ワークブックを開始する
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="p-6 text-center text-slate-400 text-sm">
+    &copy; 2026 Presentation Navi
+  </footer>
+
+</body>
+
+</html>
