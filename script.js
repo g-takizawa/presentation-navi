@@ -52,7 +52,7 @@ function updateContent() {
   // Tips
   if (document.getElementById('step-tips')) {
     const bulletColor = document.body.classList.contains('theme-indigo') ? 'text-indigo-500' : 'text-blue-500';
-    setHTML('step-tips', s.tips.map(t => `<div class="text-[11px] text-slate-600 flex items-start gap-2 leading-relaxed"><span class="${bulletColor}">•</span>${t}</div>`).join(''));
+    setHTML('step-tips', s.tips.map(t => `<div class="text-sm text-slate-800 font-medium flex items-start gap-2 leading-relaxed tracking-tight bg-yellow-50/50 p-2 rounded-md border border-yellow-100 mb-2"><span class="${bulletColor} text-base mt-[-2px]">•</span>${t}</div>`).join(''));
   }
 
   // Input
