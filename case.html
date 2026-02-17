@@ -196,7 +196,7 @@
       {
         label: "Step 6", title: "検査所見 (Labs/Imaging)", time: "1:00",
         rule: "異常値を主に示す。画像は『どこに何があるか』を言語化。D-dimer/BNP陰性など、臨床推論のきっかけとなる所見を出す。",
-        example: "「X線で過膨張を認めますが浸潤影なし。CTで気腫性変化と気管支壁肥厚を認めます。PaO2低下、PaCO2 48mmHg、WBC1100、CRPは8と上昇。D-dimerおよびBNPは正常範囲内です。」",
+        example: "「X線で過膨張を認めますが浸潤影なし。CTで気腫性変化と気管支壁肥厚を認めます。PaO2低下、PaCO2 48mmHg、WBC11000、CRPは8と上昇。D-dimerおよびBNPは正常範囲内です。」",
         tips: ["BNP/D-dimerが正常であることは、アセスメントで心不全/PEを論理的に否定するための強力な証拠です。"],
         key: "final_workbook_step_6"
       },
@@ -222,6 +222,13 @@
         key: "final_workbook_step_9"
       }
     ];
+    // Specific AI persona for H&P
+    window.aiSystemPrompt = `あなたは医学教育に熱心な日本の指導医です。学生や研修医が作成した「症例プレゼン（H&P）」の原稿を添削します。
+    評価軸：
+    1. 必要な情報（陽性所見・陰性所見）が論理的に構成されているか。
+    2. 医学的に不正確な表現や、冗長な表現がないか。
+    3. プレゼンテーションとして聞きやすい長さか。
+    回答は日本語で、具体的で建設的なフィードバックを提示してください。`;
   </script>
   <script src="script.js"></script>
 </body>
