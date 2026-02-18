@@ -1,0 +1,29 @@
+{
+  "name": "presentation-navi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "build": "npx @tailwindcss/cli -i ./style.css -o ./output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/g-takizawa/presentation-navi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/g-takizawa/presentation-navi/issues"
+  },
+  "homepage": "https://github.com/g-takizawa/presentation-navi#readme",
+  "devDependencies": {
+    "tailwindcss": "^4.1.18"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "autoprefixer": "^10.4.24",
+    "postcss": "^8.5.6"
+  }
+}
