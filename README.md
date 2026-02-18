@@ -26,7 +26,7 @@ npm run build
 <!-- Local CSS (Offline) -->
 <!-- <link rel="stylesheet" href="output.css"> --> <!-- コメントアウト -->
 <!-- CDN (Online) -->
-<script src="https://cdn.tailwindcss.com"></script> <!-- コメント解除 -->
+<script src="https://cdn.tailwindcss.com/3.4.16"></script> <!-- コメント解除 -->
 ```
 
 ## 注意事項
