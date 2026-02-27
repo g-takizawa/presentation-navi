@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentation Workbook (Legacy Version)</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <style>
+    /* Base Styles for IE compatibility */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Meiryo", "MS PGothic", "Noto Sans JP", sans-serif;
+      background-color: #f1f5f9;
+      color: #1e293b;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Utiltity for IE Flex */
+    .flex {
+      display: flex;
+    }
+
+    /* IE11 Flexbox support */
+    @media all and (-ms-high-contrast:none) {
+      .flex {
+        display: -ms-flexbox;
+        display: flex;
+      }
+
+      #app-view {
+        display: -ms-flexbox;
+        display: flex;
+      }
+    }
+
+    /* Portal View */
+    #portal-view {
+      padding: 60px 20px;
+      height: 100vh;
+      overflow-y: auto;
+      text-align: center;
+    }
+
+    .portal-title {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #0f172a;
+    }
+
+    .portal-sub {
+      color: #64748b;
+      margin-bottom: 50px;
+    }
+
+    .portal-cards {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .portal-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 30px;
+      width: 48%;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s;
+    }
+
+    .portal-card.full {
+      width: 100%;
+      text-align: center;
+      border-width: 2px;
+    }
+
+    .portal-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .portal-card.model {
+      border-color: #fde68a;
+    }
+
+    .portal-card.model:hover {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .portal-card.case {
+      border-color: #e2e8f0;
+    }
+
+    .portal-card.case:hover {
+      border-color: #3b82f6;
+    }
+
+    .portal-card.daily {
+      border-color: #e2e8f0;
+    }
+
+    .portal-card.daily:hover {
+      border-color: #6366f1;
+    }
+
+    .card-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .model .card-badge {
+      color: #d97706;
+      background: transparent;
+      padding: 0;
+      margin-bottom: 10px;
+    }
+
+    .case .card-badge {
+      background: #0f172a;
+    }
+
+    .daily .card-badge {
+      background: #312e81;
+    }
+
+    /* App View */
+    #app-view {
+      display: none;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .header {
+      background-color: #ffffff;
+      border-bottom: 1px solid #cbd5e1;
+      padding: 12px 24px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .home-btn {
+      background: none;
+      border: none;
+      color: #64748b;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      margin-right: 20px;
+      padding: 5px;
+    }
+
+    .home-btn:hover {
+      color: #0f172a;
+    }
+
+    .theme-badge {
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      margin-right: 15px;
+      font-size: 18px;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      padding: 16px;
+      gap: 16px;
+      overflow: hidden;
+      max-width: 1536px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .pane-left {
+      overflow-y: auto;
+      padding: 24px;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    .pane-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step-header-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
+    }
+
+    .step-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .step-label {
+      font-size: 10px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .step-time {
+      font-size: 12px;
+      color: #94a3b8;
+      font-family: monospace;
+    }
+
+    .step-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0 0 8px 0;
+    }
+
+    .step-rule {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    .example-box {
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .example-val {
+      background: white;
+      padding: 8px 16px;
+      border-left: 4px solid;
+      margin-bottom: 16px;
+      font-style: italic;
+      border-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      color: #0f172a;
+      line-height: 1.6;
+    }
+
+    .tips-box {
+      font-size: 14px;
+      margin-top: auto;
+    }
+
+    .tip-item {
+      margin-bottom: 12px;
+      display: flex;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .nav-dots {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .dot {
+      width: 32px;
+      height: 32px;
+      border: 2px solid #e2e8f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      color: #94a3b8;
+      cursor: pointer;
+      background: white;
+      transition: all 0.2s;
+    }
+
+    textarea {
+      flex: 1;
+      width: 100%;
+      padding: 24px;
+      border: none;
+      font-size: 16px;
+      line-height: 1.6;
+      resize: none;
+      font-family: inherit;
+      color: #1e293b;
+    }
+
+    textarea:focus {
+      outline: none;
+    }
+
+    .right-header {
+      padding: 16px 24px;
+      font-weight: bold;
+      font-size: 12px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #e2e8f0;
+      letter-spacing: 1px;
+    }
+
+    .right-footer {
+      padding: 16px 24px;
+      background: #f8fafc;
+      border-top: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      border: none;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      text-decoration: none;
+    }
+
+    .btn-prev {
+      background: transparent;
+      color: #94a3b8;
+      padding: 8px 0;
+      box-shadow: none;
+    }
+
+    .btn-prev:hover {
+      color: #0f172a;
+    }
+
+    .btn-prev:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    .btn-next {
+      padding: 8px 24px;
+    }
+
+    /* Theming - Case (Blue) */
+    .theme-case .header-left .theme-badge {
+      background: #0f172a;
+    }
+
+    .theme-case .step-label {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .theme-case .example-box {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+
+    .theme-case .example-box h3 {
+      color: #92400e;
+    }
+
+    .theme-case .example-val {
+      border-color: #fcd34d;
+    }
+
+    .theme-case .tips-box h4 {
+      border-top: 2px solid #fcd34d;
+      color: #78350f;
+      padding-top: 16px;
+    }
+
+    .theme-case .right-header {
+      background: #eff6ff;
+      color: #1e40af;
+    }
+
+    .theme-case .dot.active {
+      border-color: #2563eb;
+      color: #2563eb;
+    }
+
+    .theme-case .btn-next {
+      background: #2563eb;
+    }
+
+    .theme-case .btn-next:hover {
+      background: #1d4ed8;
+    }
+
+    .theme-case .tip-item span {
+      color: #2563eb;
+      margin-right: 8px;
+      font-size: 16px;
+    }
+
+    /* Theming - Daily (Indigo) */
+    .theme-daily .header-left .theme-badge {
+      background: #312e81;
+    }
+
+    .theme-daily .step-label {
+      background: #e0e7ff;
+      color: #4f46e5;
+    }
+
+    .theme-daily .example-box {
+      background: rgba(238, 242, 255, 0.5);
+      border-color: #e0e7ff;
+    }
+
+    .theme-daily .example-box h3 {
+      color: #3730a3;
+    }
+
+    .theme-daily .example-val {
+      border-color: #a5b4fc;
+    }
+
+    .theme-daily .tips-box h4 {
+      border-top: 1px solid #e0e7ff;
+      color: #64748b;
+      padding-top: 16px;
+    }
+
+    .theme-daily .right-header {
+      background: #eef2ff;
+      color: #3730a3;
+    }
+
+    .theme-daily .dot.active {
+      border-color: #4f46e5;
+      color: #4f46e5;
+    }
+
+    .theme-daily .btn-next {
+      background: #4338ca;
+    }
+
+    .theme-daily .btn-next:hover {
+      background: #3730a3;
+    }
+
+    .theme-daily .tip-item span {
+      color: #4f46e5;
+      margin-right: 8px;
+      font-size: 16px;
+    }
+
+    /* Theming - Model (Amber) */
+    .theme-model .header-left .theme-badge {
+      background: transparent;
+      color: #b45309;
+      padding: 4px 8px;
+      font-size: 12px;
+      background: #fef3c7;
+    }
+
+    .warning-ie {
+      background-color: #fee2e2;
+      border: 1px solid #f87171;
+      color: #991b1b;
+      padding: 10px;
+      font-size: 12px;
+      border-radius: 4px;
+      text-align: center;
+      margin-bottom: 20px;
+      margin-top: -20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="portal-view">
+    <div class="warning-ie"><strong>注意:</strong> このページはIE互換モードを含むオフライン環境向けです。AI添削は利用できません。</div>
+    <div class="portal-title">Presentation Workbook</div>
+    <div class="portal-sub">目的に合わせてワークブックを選択してください</div>
+
+    <div class="portal-cards">
+      <div class="portal-card full model" onclick="startApp('model')">
+        <div class="card-badge">まずは「完成形のお手本」をチェックする</div>
+        <p style="color: #64748b; font-size: 14px;">理想的なプレゼンテーション構成を、実際の症例（77歳男性・呼吸困難）で確認できます</p>
+      </div>
+
+      <div class="portal-card case" onclick="startApp('case')">
+        <div class="card-badge">H&P</div>
+        <h2 style="font-size: 24px; font-weight: bold; margin: 0 0 10px 0;">症例プレゼン</h2>
+        <span
+          style="font-size: 12px; font-weight: bold; background: #dbeafe; color: #1d4ed8; padding: 4px 8px; border-radius: 4px;">初診・入院時</span>
+        <p style="color: #475569; font-size: 15px; margin-top: 15px; line-height: 1.6;">
+          詳細な病歴聴取からアセスメントまで。論理的なプレゼンテーション構成を学ぶためのフルバージョン。</p>
+      </div>
+
+      <div class="portal-card daily" onclick="startApp('daily')">
+        <div class="card-badge">P-A/P</div>
+        <h2 style="font-size: 24px; font-weight: bold; margin: 0 0 10px 0;">プロブレム別デイリー</h2>
+        <span
+          style="font-size: 12px; font-weight: bold; background: #e0e7ff; color: #4338ca; padding: 4px 8px; border-radius: 4px;">回診・経過報告</span>
+        <p style="color: #475569; font-size: 15px; margin-top: 15px; line-height: 1.6;">
+          毎日の回診に特化したフォーマット。全体像の後に、プロブレム毎のアセスメントとプラン（A&P）を提示します。</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="app-view">
+    <div class="header">
+      <div class="header-left">
+        <button class="home-btn" onclick="showPortal()">← <span style="text-decoration: underline;">Home</span></button>
+        <div class="theme-badge" id="app-badge">H&P</div>
+        <div>
+          <div style="font-weight:bold; font-size:18px;" id="app-title">症例プレゼン・ワークブック</div>
+          <div style="font-size:10px; color:#64748b; font-weight: bold; text-transform: uppercase;">全ステップ統合ダウンロード機能搭載
+          </div>
+        </div>
+      </div>
+      <div class="nav-dots" id="nav-dots"></div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button class="btn btn-next" id="header-btn-download" style="padding: 8px 16px; font-size: 14px;"
+          onclick="downloadAll()">💾 全原稿をダウンロード</button>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="pane pane-left">
+        <div class="step-header-card">
+          <div class="step-header-top">
+            <span id="step-label" class="step-label">Step 1</span>
+            <span id="step-time" class="step-time"></span>
+          </div>
+          <h2 id="step-title" class="step-title"></h2>
+          <div id="step-rule" class="step-rule"></div>
+        </div>
+
+        <div class="example-box" id="example-container">
+          <h3
+            style="font-size: 12px; font-weight: bold; margin:0 0 10px 0; text-transform: uppercase; display: flex; align-items: center; gap: 8px;">
+            <span
+              style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; display: inline-block;"></span>
+            お手本
+          </h3>
+          <div id="step-example" class="example-val"></div>
+
+          <div class="tips-box" id="tips-container">
+            <h4
+              style="font-size: 12px; font-weight: bold; margin:0 0 15px 0; text-transform: uppercase; display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">💡</span> Clinical Tips
+            </h4>
+            <div id="step-tips"></div>
+          </div>
+        </div>
+
+        <div id="full-model-view" style="display:none;"></div>
+      </div>
+
+      <div class="pane pane-right" id="input-card">
+        <div class="right-header" id="right-header-text">Your Draft</div>
+        <textarea id="draft-input" onkeyup="saveDraft()" placeholder="お手本を参考に、自分の担当症例について書き込んでください..."></textarea>
+
+        <div class="right-footer">
+          <button class="btn btn-prev" id="btn-prev" onclick="prevStep()">← PREV</button>
+          <span style="font-size:10px; color:#94a3b8; font-family: monospace; letter-spacing: 1px;" id="char-count">0
+            CHARS</span>
+          <button class="btn btn-next" id="btn-next" onclick="nextStep()">NEXT →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    // IE11 Content Data
+    var datasets = {
+      model: [
+        { label: "Step 1", title: "Opening Statement", time: "", rule: "年齢、性別、最重要既往・併存症、主訴を1文で。", example: "「2型糖尿病の既往があり、喫煙歴を有する77歳男性。3日前からの湿性咳嗽と呼吸困難を主訴に来院されました。」", tips: ["聴衆が瞬時に臨床的イメージを構築できることが目標。"], key: "model_1" },
+        { label: "Step 2", title: "現病歴 (HPI)", time: "", rule: "受診までの経過を『相対時間』で記述。症状の性状(OPQRST)に加え、重要な陰性所見も。", example: "「3日前より湿性咳嗽が出現し、2日前より労作時呼吸困難を認めました。昨日より発熱、食思不振、体動困難となり受診。起坐呼吸、冷汗、下肢浮腫などは認めません。糖尿病の自己管理は良好でした。」", tips: ["食思不振・体動困難の提示は『重症度・入院適応』。"], key: "model_2" },
+        { label: "Step 3-4", title: "既往歴・併存症 & 生活歴", time: "", rule: "鑑別に関係するものを優先。喫煙歴、環境など。", example: "「併存症に2型糖尿病（罹病期間10年）、高血圧があります。内服はメトホルミン、ダパグリフロジン、アムロジピン。薬剤アレルギーはありません。\n\n喫煙歴は1日20本×55年、現喫煙者。職歴は事務職。粉塵暴露歴や鳥類の飼育歴はありません。」", tips: ["薬剤歴は急性期の管理（中止検討など）に直結します。"], key: "model_3" },
+        { label: "Step 5-6", title: "身体所見 & 検査所見", time: "", rule: "バイタル、肺音、X線・CT・血液検査結果。", example: "「BP 140/85, HR 95, BT 38.2, RR 24, SpO2 88%(RA)。軽度苦悶様。両肺野にwheezesを聴取。JVP怒張なし、下肢浮腫なし。\n\nX線で過膨張を認めますが浸潤影なし。CTで気腫性変化と気管支壁肥厚を認めます。PaO2低下、PaCO2 48mmHg、WBC11000、CRPは8と上昇。D-dimerおよびBNPは正常範囲内です。」", tips: ["除外すべき疾患（心不全など）を否定する所見を提示。"], key: "model_4" },
+        { label: "Step 7", title: "プロブレムリスト", time: "", rule: "症候名で優先順位をつけて記載。", example: "#1. wheezesを伴うII型急性呼吸不全\n#2. 2型糖尿病\n#3. 喫煙歴", tips: ["未診断の段階で確定診断名を書かないこと。"], key: "model_5" },
+        { label: "Step 8", title: "アセスメント", time: "", rule: "Summary Statementから開始。最も可能性の高い診断の根拠と鑑別。", example: "「喫煙歴、気腫性変化、wheezesから、背景にCOPDが存在し、感染による急性増悪（AE-COPD）を第一に考えます。心不全や肺塞栓症は否定的です。#2 についてはステロイド使用による高血糖増悪リスクを考慮します。」", tips: ["臨床推論を論理的に説明するセクション。"], key: "model_6" },
+        { label: "Step 9", title: "プラン", time: "", rule: "診断・治療・教育プランを具体的に。", example: "「SpO2 88-92%目標で酸素投与。喀痰検査提出後にABC療法（抗菌薬はセフトリアキソン2g/day・SA吸入・ステロイドはソル・メドロール40mgx3/day）開始し病態が安定すればLABA/LAMA吸入薬の導入を検討します。\n\n#2 はメトホルミン・ダパグリフロジンを中止し、スライディングスケール対応とし、経口摂取が安定すれば経口薬に変更予定。禁煙指導と退院前に必要なワクチン接種について説明を行います。」", tips: ["治療だけでなく、予防的介入も含めるのがポイント。"], key: "model_7" }
+      ],
+      case: [
+        {
+          label: "Step 1", title: "Opening Statement", time: "30s",
+          rule: "年齢、性別、最重要既往・併存症（今回の問題に関連するもの）、主訴を1文で。聴衆が瞬時に臨床的イメージを構築できることが目標。",
+          example: "「2型糖尿病の既往があり、喫煙歴を有する77歳男性。3日前からの湿性咳嗽と呼吸困難を主訴に来院されました。」",
+          tips: ["併存症として糖尿病がある場合、感染症への感受性やステロイド使用による高血糖を示唆するため、Openingで提示すべきです。", "名前は不要。医学的なプロファイルのみ提示。"],
+          key: "final_workbook_step_1"
+        },
+        {
+          label: "Step 2", title: "現病歴 (HPI)", time: "2:30",
+          rule: "受診までの経過を『相対時間（〜日前）』で記述する。症状の性状(OPQRST)に加え、起坐呼吸などの重要な陰性所見を配置する。",
+          example: "「3日前より湿性咳嗽が出現し、2日前より労作時呼吸困難を認めました。昨日より発熱、食思不振、体動困難となり受診。起坐呼吸、冷汗、下肢浮腫などは認めません。糖尿病の自己管理は良好でした。」",
+          tips: ["食思不振・体動困難の提示は『重症度・入院適応』。", "心不全を否定するための陰性所見（起坐呼吸なし等）を含めた。"],
+          key: "final_workbook_step_2"
+        },
+        {
+          label: "Step 3", title: "既往歴・併存症", time: "30s",
+          rule: "今回の鑑別に関連するものを優先。カルテには全て記載するが、プレゼンでは情報の取捨選択を行う。薬剤歴、アレルギーも含める。",
+          example: "「併存症に2型糖尿病（罹病期間10年）、高血圧があります。内服はメトホルミン、ダパグリフロジン、アムロジピン。薬剤アレルギーはありません。」",
+          tips: ["メトホルミンとSGLT2阻害薬（ダパグリフロジン）は、急性期やsick dayには中止・インスリン切り替えの検討が必要な薬剤です。"],
+          key: "final_workbook_step_3"
+        },
+        {
+          label: "Step 4", title: "生活歴 (Social History)", time: "30s",
+          rule: "呼吸器疾患では特に重要。喫煙歴（Brinkman Index + 現喫煙状況）、職業、ペット、住環境など。",
+          example: "「喫煙歴は1日20本×55年、現喫煙者。職歴は事務職。粉塵暴露歴や鳥類の飼育歴はありません。」",
+          tips: ["COPDを疑う場合『喫煙者であること』を明記するのが重要です。"],
+          key: "final_workbook_step_4"
+        },
+        {
+          label: "Step 5", title: "身体所見 (Objective)", time: "1:00",
+          rule: "バイタルと全身状態から開始。鑑別に関係するシステム（呼吸器・循環器）を中心に。呼吸数は大切。また、正常であることを期待する『陰性所見』も示す。",
+          example: "「BP 140/85, HR 95, BT 38.2, RR 24, SpO2 88%(RA)。軽度苦悶様。両肺野にwheezesを聴取。JVP怒張なし、下肢浮腫なし。」",
+          tips: ["wheezesの存在を強調。", "心不全を否定する陰性所見（JVP・浮腫なし）を明言し、呼吸器疾患の可能性を考慮に入れます。"],
+          key: "final_workbook_step_5"
+        },
+        {
+          label: "Step 6", title: "検査所見 (Labs/Imaging)", time: "1:00",
+          rule: "異常値を主に示す。画像は『どこに何があるか』を言語化。D-dimer/BNP陰性など、臨床推論のきっかけとなる所見を出す。",
+          example: "「X線で過膨張を認めますが浸潤影なし。CTで気腫性変化と気管支壁肥厚を認めます。PaO2低下、PaCO2 48mmHg、WBC11000、CRPは8と上昇。D-dimerおよびBNPは正常範囲内です。」",
+          tips: ["BNP/D-dimerが正常であることは、アセスメントで心不全/PEを論理的に否定するための強力な証拠です。"],
+          key: "final_workbook_step_6"
+        },
+        {
+          label: "Step 7", title: "プロブレムリスト", time: "30s",
+          rule: "確定していない診断名は書かず、症候名で記載。主訴に関連する項目を #1 に挙げる。",
+          example: "「#1. wheezesを伴うII型急性呼吸不全、#2. 2型糖尿病、#3. 喫煙歴 です。」",
+          tips: ["未診断の段階で #1 COPD急性増悪 と書かない。"],
+          key: "final_workbook_step_7"
+        },
+        {
+          label: "Step 8", title: "アセスメント", time: "2:00",
+          rule: "Summary Statementから開始。最も可能性の高い診断の根拠、次いで鑑別（除外した理由）を述べる。",
+          example: "「喫煙歴、気腫性変化、wheezesから、背景にCOPDが存在し、感染による急性増悪（AE-COPD）を第一に考えます。心不全や肺塞栓症は否定的です。#2 についてはステロイド使用による高血糖増悪リスクを考慮します。」",
+          tips: ["『〜と考えます』と断定的に述べる。", "併存症（糖尿病）への配慮を含めることで、臨床医としての視点の広さを示せます。"],
+          key: "final_workbook_step_8"
+        },
+        {
+          label: "Step 9", title: "プラン", time: "30s",
+          rule: "診断・治療・教育プランを具体的に。特に糖尿病薬の具体的調整（中止薬・代替療法）を明記する。",
+          example: "「SpO2 88-92%目標で酸素投与。喀痰検査提出後にABC療法（抗菌薬はセフトリアキソン2g/day・SA吸入・ステロイドはソル・メドロール40mgx3/day）開始し病態が安定すればLABA/LAMA吸入薬の導入を検討します。#2 はメトホルミン・ダパグリフロジンを中止し、スライディングスケール対応とし、経口摂取が安定すれば経口薬に変更予定。禁煙指導と退院前に必要なワクチン接種について説明を行います。」",
+          tips: ["SGLT2阻害薬の中止はシックデイ予防に重要。", "禁煙やワクチン等の予防的介入を含めるのが岸本メソッド。"],
+          key: "final_workbook_step_9"
+        }
+      ],
+      daily: [
+        {
+          label: "Step 1", title: "Summary Update", time: "15s",
+          rule: "現在の全体像を一言で共有する。名前、主病名、そして『入院何日目か』を必ず含める。",
+          example: "「COPD急性増悪の疑いで入院3日目の77歳男性、佐藤さんです。ABC療法として、セフトリアキソン2g、mPSL40mgx3、ベネトリン吸入、低流量酸素を開始して、現在呼吸状態は安定しています。」",
+          tips: ["既往歴等は初日に話しているので、ここでは『現在の主病名』に絞ります。"],
+          key: "ap_snap_step_1"
+        },
+        {
+          label: "Step 2", title: "Subjective / Objective", time: "30s",
+          rule: "昨日のプレゼン以降の『変化』を述べる。夜間イベント、バイタル、新規検査結果の解釈を提示。",
+          example: "「昨夜は咳嗽、呼吸困難が軽減し入眠できました。今朝より喀痰の粘稠度が低下し、呼吸困難感も消失しました。SpO2 92% (0.5L)と安定。血液検査でWBC 8500, CRP 2.4と炎症反応も改善傾向。喀痰のGram染色ではインフルエンザ桿菌と思われるグラム陰性桿菌がみられました。血糖は180〜210で推移。」",
+          tips: ["『正常範囲』とだけ言わず、炎症所見の具体的な低下などのトレンドを言葉にします。"],
+          key: "ap_snap_step_2"
+        },
+        {
+          label: "Step 3", title: "Problem #1: A & P", time: "45s",
+          rule: "最重要プロブレムに対する現状評価と、今日の具体的なアクション（処方変更、離床等）を述べる。",
+          example: "「#1 AE-COPDは、各種所見より改善傾向と判断します。本日より酸素をオフし、抗菌薬をCTRXから感受性が確認できればAMPC/CVAの内服に切り替えます。午後に理学療法士と離床範囲を拡大します。」",
+          tips: ["『改善傾向なので継続』で終わらず、具体的な『前進（ステップアップ/ダウン）』を提案してください。"],
+          key: "ap_snap_step_3"
+        },
+        {
+          label: "Step 4", title: "Problem #2: A & P", time: "30s",
+          rule: "併存症や入院中に発生した問題（副作用等）への評価とプランを述べる。",
+          example: "「#2 2型糖尿病は、ステロイドによる高血糖を認めるもののスライディングスケールで管理可能です。スライディングスケールを継続し、食事摂取が安定すれば内服再開を検討します。」",
+          tips: ["主病名の影に隠れがちな『併存症』の管理状況を報告することで、チームの安心感が高まります。"],
+          key: "ap_snap_step_4"
+        },
+        {
+          label: "Step 5", title: "Social / Discharge", time: "15s",
+          rule: "退院に向けた課題や、家族への説明予定などを共有して締めくくる。",
+          example: "「病状は順調であり、週末の退院を目指します。本日、ご家族に今後の吸入指導と各種ワクチン接種、退院後の生活について説明する予定です。」",
+          tips: ["医学的側面だけでなく、ケアの『出口』を示すことで、プレゼンが完結します。"],
+          key: "ap_snap_step_5"
+        }
+      ]
+    };
+
+    var currentMode = '';
+    var steps = [];
+    var currentIdx = 0;
+
+    function init() {
+      showPortal();
+    }
+
+    function showPortal() {
+      document.getElementById('portal-view').style.display = 'block';
+      document.getElementById('app-view').style.display = 'none';
+      document.body.className = '';
+    }
+
+    function startApp(mode) {
+      currentMode = mode;
+      steps = datasets[mode];
+      currentIdx = 0;
+
+      document.getElementById('portal-view').style.display = 'none';
+      document.getElementById('app-view').style.display = 'flex';
+      document.body.className = 'theme-' + mode;
+
+      var inputCard = document.getElementById('input-card');
+      var dots = document.getElementById('nav-dots');
+      var downloadBtn = document.getElementById('header-btn-download');
+
+      if (mode === 'model') {
+        document.getElementById('app-badge').innerHTML = 'Model';
+        document.getElementById('app-title').innerHTML = 'モデル原稿';
+        inputCard.style.display = 'none';
+        dots.style.display = 'none';
+        downloadBtn.style.display = 'none';
+      } else {
+        if (mode === 'case') {
+          document.getElementById('app-badge').innerHTML = 'H&P';
+          document.getElementById('app-title').innerHTML = '症例プレゼン・ワークブック';
+          document.getElementById('right-header-text').innerHTML = 'Your Draft';
+        } else if (mode === 'daily') {
+          document.getElementById('app-badge').innerHTML = 'P-A/P';
+          document.getElementById('app-title').innerHTML = 'プロブレム別デイリーワークブック';
+          document.getElementById('right-header-text').innerHTML = 'Active Problem Draft';
+        }
+        inputCard.style.display = 'flex';
+        dots.style.display = 'flex';
+        downloadBtn.style.display = 'inline-block';
+      }
+
+      renderNav();
+      updateUI();
+    }
+
+    function renderNav() {
+      var nav = document.getElementById('nav-dots');
+      nav.innerHTML = '';
+      if (currentMode === 'model') return;
+
+      for (var i = 0; i < steps.length; i++) {
+        var span = document.createElement('span');
+        span.className = 'dot' + (i === currentIdx ? ' active' : '');
+        span.innerHTML = (i + 1);
+        span.onclick = (function (index) {
+          return function () { currentIdx = index; updateUI(); };
+        })(i);
+        nav.appendChild(span);
+      }
+    }
+
+    function updateUI() {
+      var dots = document.getElementById('nav-dots');
+
+      if (currentMode === 'model') {
+        var html = '<div style="background:white; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; margin-bottom:20px;">' +
+          '<div style="background:#fffbeb; padding:24px; border-bottom:1px solid #fde68a;">' +
+          '<div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span style="color:#d97706; font-size:12px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">Case Study</span><span style="color:#94a3b8; font-family:monospace; font-size:12px;">ID: 001</span></div>' +
+          '<h2 style="font-size:24px; font-weight:bold; margin:0 0 8px 0; color:#0f172a;">77歳男性 呼吸困難と湿性咳嗽</h2>' +
+          '<div style="font-size:14px; color:#64748b;">主訴：呼吸困難、湿性咳嗽 / 診断：COPD急性増悪</div>' +
+          '</div><div style="padding:40px;">';
+
+        for (var i = 0; i < steps.length; i++) {
+          var s = steps[i];
+          html += '<div style="margin-bottom:32px;">';
+          html += '<div style="margin-bottom:8px; display:flex; align-items:center; gap:8px;"><span style="background:#e2e8f0; color:#475569; font-size:10px; font-weight:bold; padding:2px 6px; border-radius:4px; text-transform:uppercase;">' + s.label + '</span><h3 style="font-size:14px; font-weight:bold; color:#94a3b8; letter-spacing:1px; text-transform:uppercase; margin:0;">' + s.title + '</h3></div>';
+          html += '<p style="border-left:4px solid #fde68a; padding-left:16px; font-size:18px; line-height:1.6; color:#1e293b; white-space:pre-wrap; margin:0;">' + (s.example || '').replace(/\n/g, '<br>') + '</p>';
+          html += '</div>';
+        }
+        html += '</div></div>';
+
+        document.getElementById('step-header-card') && (document.getElementById('step-header-card').style.display = 'none');
+        document.getElementById('step-label').parentNode.parentNode.style.display = 'none'; // hide step-header-card
+        document.getElementById('example-container').style.display = 'none';
+
+        var container = document.getElementById('full-model-view');
+        container.innerHTML = html;
+        container.style.display = 'block';
+
+      } else {
+        var headerCard = document.getElementsByClassName('step-header-card')[0];
+        if (headerCard) headerCard.style.display = 'block';
+
+        document.getElementById('example-container').style.display = 'flex';
+        document.getElementById('full-model-view').style.display = 'none';
+
+        var s = steps[currentIdx];
+        document.getElementById('step-label').innerHTML = s.label || '';
+        document.getElementById('step-time').innerHTML = s.time || "";
+        document.getElementById('step-title').innerHTML = s.title || '';
+        document.getElementById('step-rule').innerHTML = s.rule || '';
+        document.getElementById('step-example').innerHTML = (s.example || '').replace(/\n/g, '<br>');
+
+        var tipsHtml = '';
+        if (s.tips) {
+          for (var i = 0; i < s.tips.length; i++) {
+            tipsHtml += '<div class="tip-item"><span>•</span><div>' + s.tips[i] + '</div></div>';
+          }
+        }
+        document.getElementById('step-tips').innerHTML = tipsHtml;
+
+        var val = window.localStorage.getItem(s.key) || "";
+        document.getElementById('draft-input').value = val;
+        document.getElementById('char-count').innerHTML = val.length + ' CHARS';
+
+        document.getElementById('btn-prev').disabled = (currentIdx === 0);
+        document.getElementById('btn-next').innerHTML = (currentIdx === steps.length - 1 ? 'FINISH' : 'NEXT →');
+
+        var dotsArr = dots.getElementsByTagName('span');
+        for (var j = 0; j < dotsArr.length; j++) {
+          dotsArr[j].className = 'dot' + (j === currentIdx ? ' active' : '');
+        }
+      }
+    }
+
+    function nextStep() {
+      if (currentIdx < steps.length - 1) {
+        currentIdx++;
+        updateUI();
+      }
+    }
+
+    function prevStep() {
+      if (currentIdx > 0) {
+        currentIdx--;
+        updateUI();
+      }
+    }
+
+    function saveDraft() {
+      var val = document.getElementById('draft-input').value;
+      window.localStorage.setItem(steps[currentIdx].key, val);
+      document.getElementById('char-count').innerHTML = val.length + ' CHARS';
+    }
+
+    function downloadAll() {
+      var titleMap = { 'case': '症例プレゼン', 'daily': 'プロブレム別デイリー' };
+      var text = "【" + (titleMap[currentMode] || "Presentation Workbook") + "】\n";
+      text += "作成日: " + new Date().toLocaleString() + "\n";
+      text += "--------------------------------------\n\n";
+
+      for (var i = 0; i < steps.length; i++) {
+        var val = window.localStorage.getItem(steps[i].key) || "(未入力)";
+        text += "■ " + steps[i].label + ": " + steps[i].title + "\n";
+        text += val + "\n\n";
+      }
+
+      var blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(blob, "presentation_draft.txt");
+      } else {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "presentation_draft.txt";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    }
+
+    init();
+  </script>
+
+</body>
+
+</html>
