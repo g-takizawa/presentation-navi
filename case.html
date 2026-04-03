@@ -47,7 +47,6 @@
           class="bg-blue-600 text-white px-3 sm:px-4 py-1.5 rounded-md text-sm font-bold hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-sm">
           💾 <span class="hidden sm:inline">全原稿をダウンロード</span>
         </button>
-        <button onclick="toggleSettings()" class="p-2 text-slate-400 hover:text-blue-600 transition-colors">⚙️</button>
       </div>
     </div>
   </header>
@@ -91,24 +90,12 @@
     <!-- Right Pane: Workspace -->
     <section class="w-full lg:w-1/2 flex flex-col gap-4 min-h-[50vh] lg:min-h-0">
       <div class="bg-white rounded-xl shadow-lg border border-blue-200 flex-1 flex flex-col overflow-hidden">
-        <div class="p-4 bg-blue-50 border-b border-blue-100 flex justify-between items-center flex-none">
+        <div class="p-4 bg-blue-50 border-b border-blue-100 flex items-center flex-none">
           <h3 class="text-xs font-bold text-blue-800 uppercase tracking-widest">Your Draft</h3>
-          <div class="flex gap-2">
-            <button onclick="aiCritique()"
-              class="bg-white text-blue-600 px-3 py-1 rounded border border-blue-200 text-xs font-bold hover:bg-blue-100 transition-colors">✨
-              AI添削</button>
-          </div>
         </div>
         <textarea id="draft-input" oninput="saveDraft()"
           class="flex-1 p-6 text-base leading-relaxed text-slate-800 outline-none resize-none placeholder:text-slate-300"
           placeholder="お手本を参考に、自分の担当症例について書き込んでください..."></textarea>
-
-        <div id="ai-output"
-          class="hidden p-4 bg-slate-900 text-white text-sm border-t border-slate-700 max-h-48 overflow-y-auto flex-none">
-          <div id="ai-loading" class="ai-loading text-blue-400 font-bold mb-2">Geminiが解析中...</div>
-          <div id="ai-text" class="text-xs leading-relaxed"></div>
-          <button onclick="closeAI()" class="mt-2 text-[10px] text-slate-500 underline">閉じる</button>
-        </div>
 
         <div id="step-nav" class="p-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center flex-none">
           <button onclick="prevStep()" id="btn-prev"
@@ -121,45 +108,6 @@
       </div>
     </section>
   </main>
-
-  <!-- Settings Modal -->
-  <div id="settings-modal"
-    class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl relative">
-      <h3 class="text-xl font-bold mb-2">設定 & API</h3>
-
-      <div class="mb-6">
-        <div class="bg-blue-50 border border-blue-100 rounded-lg p-3 mb-4 text-xs text-blue-900">
-          <p class="font-bold mb-1">🔑 APIキーの入手方法</p>
-          <ol class="list-decimal list-inside space-y-1 ml-1 text-blue-800/80">
-            <li><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer"
-                class="underline hover:text-blue-600">Google AI Studio</a> にアクセス</li>
-            <li>「Create API key」をクリック</li>
-            <li>作成されたキーをコピーして下に貼り付け</li>
-          </ol>
-          <p class="mt-2 text-[10px] text-blue-700/70">※現在は無料枠（Free of Charge）で十分にご利用いただけます。</p>
-        </div>
-        <label class="block text-xs text-slate-500 mb-2">Gemini API Key</label>
-        <input type="password" id="api-key-input" class="w-full p-3 border rounded-lg text-sm" placeholder="AIzaSy...">
-        <p class="text-[10px] text-slate-400 mt-1">※キーはブラウザ内にのみ保存されます</p>
-      </div>
-
-      <div class="flex gap-2 mb-6">
-        <button onclick="saveApiKey()"
-          class="flex-1 bg-blue-600 text-white py-2.5 rounded-lg font-bold hover:bg-blue-700 transition-colors">APIキーを保存</button>
-      </div>
-
-      <div class="border-t border-slate-100 pt-6">
-        <h4 class="text-sm font-bold text-red-600 mb-2">Danger Zone</h4>
-        <button onclick="clearAllData()"
-          class="w-full text-red-500 border border-red-200 bg-red-50 py-2 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors">
-          ⚠️ 全ての原稿データを消去
-        </button>
-      </div>
-
-      <button onclick="toggleSettings()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">✕</button>
-    </div>
-  </div>
 
   <script>
     const steps = [
@@ -227,13 +175,6 @@
         key: "final_workbook_step_9"
       }
     ];
-    // Specific AI persona for H&P
-    window.aiSystemPrompt = `あなたは医学教育に熱心な日本の指導医です。学生や研修医が作成した「症例プレゼン（H&P）」の原稿を添削します。
-    評価軸：
-    1. 必要な情報（陽性所見・陰性所見）が論理的に構成されているか。
-    2. 医学的に不正確な表現や、冗長な表現がないか。
-    3. プレゼンテーションとして聞きやすい長さか。
-    回答は日本語で、具体的で建設的なフィードバックを提示してください。`;
   </script>
   <script src="script.js"></script>
 </body>

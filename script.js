@@ -2,7 +2,6 @@
 // Expects 'steps' array to be defined in the HTML file before loading this script.
 
 let currentIdx = 0;
-let apiKey = localStorage.getItem('gemini_api_key') || "";
 
 function init() {
   if (typeof steps === 'undefined') {
@@ -11,10 +10,6 @@ function init() {
   }
   renderNavBar();
   updateContent();
-  if (apiKey) {
-    const keyInput = document.getElementById('api-key-input');
-    if (keyInput) keyInput.value = apiKey;
-  }
 }
 
 function renderNavBar() {
@@ -103,78 +98,6 @@ function downloadFullDraft() {
   URL.revokeObjectURL(url);
 }
 
-function toggleSettings() {
-  const modal = document.getElementById('settings-modal');
-  if (modal) modal.classList.toggle('hidden');
-}
-
-function saveApiKey() {
-  const input = document.getElementById('api-key-input');
-  if (input) {
-    apiKey = input.value.trim();
-    localStorage.setItem('gemini_api_key', apiKey);
-    showToast('APIキーを保存しました');
-    toggleSettings();
-  }
-}
-
-function clearAllData() {
-  if (confirm('全ての原稿データを消去しますか？\n（APIキーは保持されます）')) {
-    // Clear all keys defined in current steps
-    steps.forEach(s => localStorage.removeItem(s.key));
-    updateContent();
-    showToast('データを消去しました');
-    toggleSettings();
-  }
-}
-
-async function aiCritique() {
-  if (!apiKey) { toggleSettings(); return; }
-  const draft = document.getElementById('draft-input').value;
-  if (!draft) { showToast('原稿が入力されていません'); return; }
-
-  const output = document.getElementById('ai-output');
-  if (output) output.classList.remove('hidden');
-
-  const loader = document.getElementById('ai-loading');
-  if (loader) loader.classList.remove('hidden');
-
-  const textEl = document.getElementById('ai-text');
-  if (textEl) textEl.innerText = "";
-
-  try {
-    const systemInstruction = window.aiSystemPrompt || "あなたは親切な指導医です。";
-
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: systemInstruction }] },
-        contents: [{ parts: [{ text: `以下の医学プレゼン原稿を添削してください。\nセクション：${steps[currentIdx].title}\n\n原稿：${draft}` }] }]
-      })
-    });
-    const data = await response.json();
-    if (loader) loader.classList.add('hidden');
-
-    if (data.error) {
-      if (textEl) textEl.innerText = `エラー: ${data.error.message}`;
-    } else {
-      if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-        if (textEl) textEl.innerText = data.candidates[0].content.parts[0].text;
-      } else {
-        if (textEl) textEl.innerText = "AIからの応答が不正です。APIキーを確認してください。";
-      }
-    }
-  } catch (e) {
-    if (loader) loader.classList.add('hidden');
-    if (textEl) textEl.innerText = "通信エラーが発生しました。";
-  }
-}
-
-function closeAI() {
-  const output = document.getElementById('ai-output');
-  if (output) output.classList.add('hidden');
-}
 
 function showToast(message) {
   const toast = document.createElement('div');
