@@ -96,3 +96,19 @@ body.theme-problem textarea:focus {
   /* Indigo 700 */
   box-shadow: 0 0 0 2px rgba(67, 56, 202, 0.1);
 }
+
+/* Mobile: fix PREV/NEXT nav bar to viewport bottom, respecting iPhone safe area */
+@media (max-width: 1023px) {
+  #step-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    z-index: 40;
+    border-radius: 0;
+  }
+  main {
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+  }
+}
