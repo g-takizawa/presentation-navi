@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Presentation Workbook (Legacy Version)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Presentation Workbook (Offline v1.0.5)</title>
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="favicon.png">
   <style>
@@ -22,6 +22,55 @@
       padding: 0;
       height: 100vh;
       overflow: hidden;
+    }
+
+    /* Mobile overrides */
+    @media (max-width: 1023px) {
+      body {
+        height: auto;
+        min-height: 100dvh;
+        overflow: auto;
+      }
+
+      #portal-view {
+        height: auto;
+        min-height: 100dvh;
+        padding: 32px 16px;
+      }
+
+      .portal-cards {
+        flex-direction: column;
+      }
+
+      .portal-card {
+        width: 100%;
+      }
+
+      #app-view {
+        height: auto;
+        min-height: 100dvh;
+      }
+
+      .main-content {
+        flex-direction: column;
+        overflow: visible;
+        padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+      }
+
+      .pane-left {
+        overflow: visible;
+      }
+
+      .right-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        z-index: 40;
+        border-radius: 0;
+        border-top: 1px solid #e2e8f0;
+      }
     }
 
     /* Utiltity for IE Flex */
@@ -512,24 +561,12 @@
       background: #fef3c7;
     }
 
-    .warning-ie {
-      background-color: #fee2e2;
-      border: 1px solid #f87171;
-      color: #991b1b;
-      padding: 10px;
-      font-size: 12px;
-      border-radius: 4px;
-      text-align: center;
-      margin-bottom: 20px;
-      margin-top: -20px;
-    }
   </style>
 </head>
 
 <body>
 
   <div id="portal-view">
-    <div class="warning-ie"><strong>注意:</strong> このページはIE互換モードを含むオフライン環境向けです。AI添削は利用できません。</div>
     <div class="portal-title">Presentation Workbook</div>
     <div class="portal-sub">目的に合わせてワークブックを選択してください</div>
 
