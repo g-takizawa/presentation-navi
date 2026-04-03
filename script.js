@@ -21,7 +21,7 @@ function renderNavBar() {
   const container = document.getElementById('step-nav-bar');
   if (!container) return;
   container.innerHTML = '';
-  steps.forEach((s, i) => {
+  steps.forEach((_s, i) => {
     const btn = document.createElement('button');
     // Use generic styling or strict utility classes.
     // Note: Active color depends on theme (Indigo vs Blue). handled via specific classes in HTML or generic logic.
@@ -145,7 +145,7 @@ async function aiCritique() {
   try {
     const systemInstruction = window.aiSystemPrompt || "あなたは親切な指導医です。";
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
