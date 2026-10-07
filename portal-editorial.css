@@ -1,0 +1,130 @@
+body.portal {
+  color-scheme: light;
+  background: #f7f4ee;
+  color: #25313b;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", Meiryo, sans-serif;
+  padding: 0 28px;
+  align-items: center;
+}
+.portal .portal-heading, .portal .portal-main, .portal footer {
+  width: 100%;
+  max-width: 1000px;
+}
+.portal .portal-heading {
+  text-align: left;
+  margin: 0 0 32px;
+  padding: 0 0 34px;
+  background: #233e53;
+  box-shadow: 0 0 0 100vmax #233e53;
+  clip-path: inset(0 -100vmax);
+  border-bottom: 4px solid #c79760;
+}
+.portal .portal-brand {
+  color: #fff9ee;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 24px 0;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #657987;
+}
+.portal .portal-brand span { color: #d3dce1; font-size: 12px; font-weight: 400; }
+.portal .portal-heading h1 { font-size: 34px; line-height: 1.5; margin-bottom: 10px; color: #fffdf8; }
+.portal .portal-heading > p:last-child { color: #e0e6e8; font-size: 14px; line-height: 1.8; }
+.portal .model-section, .portal .workbook-grid { max-width: none; padding: 0; }
+.portal .model-section { margin-bottom: 36px; }
+.portal .model-section > a {
+  text-align: left;
+  background: #f1e7d8;
+  border: 1px solid #ddcbb3;
+  border-left: 4px solid #b48049;
+  border-radius: 5px;
+  box-shadow: none;
+  padding: 23px 26px;
+}
+.portal .model-section > a > div { align-items: flex-start; gap: 8px; }
+.portal .model-section h3 { color: #664629; font-size: 18px; }
+.portal .model-section p { color: #53616b; line-height: 1.85; }
+.portal .model-section a > div > span {
+  opacity: 1;
+  transform: none;
+  color: #78512c;
+  font-size: 13px;
+  margin-top: 5px;
+}
+.portal .section-heading { color: #344f61; font-size: 15px; font-weight: 600; margin-bottom: 16px; }
+.portal .workbook-grid { gap: 20px; }
+.portal .workbook-grid > a {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #d7dbdb;
+  border-top: 4px solid #366b8a;
+  border-radius: 5px;
+  box-shadow: none;
+  padding: 27px;
+}
+.portal .workbook-grid > a > div:first-child { gap: 16px; align-items: flex-start; margin-bottom: 20px; }
+.portal .workbook-number {
+  color: #366b8a;
+  background: transparent;
+  border-radius: 0;
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: -.04em;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  padding: 2px 0;
+  font-variant-numeric: tabular-nums;
+}
+.portal .workbook-grid h3 { color: #233e53; font-size: 21px; line-height: 1.5; margin-bottom: 6px; }
+.portal .workbook-grid h3 + span {
+  background: transparent;
+  color: #63717a;
+  border-radius: 0;
+  padding: 0;
+  font-weight: 400;
+}
+.portal .workbook-grid p { color: #53616b; font-size: 14px; line-height: 1.95; margin-bottom: 24px; }
+.portal .workbook-grid > a > div:last-child {
+  color: #fff;
+  background: #315f7b;
+  border-radius: 3px;
+  font-size: 13px;
+  border: 1px solid #315f7b;
+  padding: 12px 16px;
+  margin-top: auto;
+  justify-content: space-between;
+  transform: none;
+}
+.portal .model-section > a:hover {
+  border-color: #b48049;
+  background: #ecdecb;
+}
+.portal .workbook-grid > a:hover {
+  border-color: #366b8a;
+  background: #fcfdfd;
+  box-shadow: none;
+}
+.portal .workbook-grid > a:hover > div:last-child { background: #233e53; }
+.portal a { transition: background-color .15s, border-color .15s; }
+.portal a:focus-visible { outline: 2px solid #344f61; outline-offset: 4px; }
+.portal footer {
+  border-top: 1px solid #d8dbda;
+  color: #65727a;
+  font-size: 11px;
+  padding: 20px 0 26px;
+  margin-top: 44px;
+}
+@media (max-width: 767px) {
+  body.portal { padding: 0 20px; }
+  .portal .portal-brand { margin-bottom: 28px; padding: 20px 0; }
+  .portal .portal-brand span { display: block; margin-top: 5px; }
+  .portal .portal-heading h1 { font-size: 26px; }
+  .portal .model-section > a, .portal .workbook-grid > a { padding: 22px; }
+  .portal .workbook-grid h3 { font-size: 20px; }
+  .portal .workbook-number { font-size: 44px; }
+  .portal .workbook-grid > a > div:first-child { gap: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portal *, .portal *::before, .portal *::after { transition: none !important; }
+}

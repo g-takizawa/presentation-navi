@@ -1,0 +1,145 @@
+/* Shared textbook palette and typography for the linked workbook pages. */
+.case-workbook #step-rule .key-sentence,
+.theme-problem #step-rule .key-sentence {
+  color: #205b7c;
+  font-weight: 700;
+}
+.case-workbook .tips-label,
+.theme-problem #step-example + h4 {
+  color: #205b7c;
+}
+.case-workbook #step-tips,
+.theme-problem #step-tips {
+  background: #eef4f7;
+  border-left: 3px solid #487b96;
+  padding: 14px 16px;
+}
+body.case-workbook #step-tips > div,
+body.theme-problem #step-tips > div {
+  color: #205b7c;
+  font-weight: 600;
+}
+:root {
+  --book-navy: #2e4557;
+  --book-ink: #30383e;
+  --book-paper: #faf9f6;
+  --book-line: #d4d6d5;
+  --case-accent: #2e4557;
+  --case-accent-strong: #203544;
+}
+body.portal, body.case-workbook, body.theme-problem, body.textbook-model {
+  background: var(--book-paper);
+  color: var(--book-ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", Meiryo, sans-serif;
+}
+.portal .portal-heading {
+  background: transparent;
+  box-shadow: none;
+  clip-path: none;
+  border-bottom: 2px solid var(--book-navy);
+  padding-bottom: 26px;
+}
+.portal .portal-brand { color: var(--book-navy); border-color: var(--book-line); }
+.portal .portal-brand span, .portal .portal-heading > p:last-child { color: #60686e; }
+.portal .portal-heading h1 { color: var(--book-navy); }
+.portal .portal-heading h1, .portal .workbook-grid h3,
+.case-workbook #step-title, .theme-problem #step-title,
+.textbook-model main h2 {
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  font-weight: 600;
+}
+.portal .model-section > a { background: #f0f1ee; border: 1px solid var(--book-line); border-left: 3px solid var(--book-navy); border-radius: 0; }
+.portal .model-section h3, .portal .model-section a > div > span { color: var(--book-navy); }
+.portal .model-section > a:hover { background: #e8ebe9; border-color: var(--book-navy); }
+.portal .workbook-grid > a { border-radius: 0; border-top-color: var(--book-navy); }
+.portal .workbook-number, .portal .workbook-grid h3 { color: var(--book-navy); }
+.portal .workbook-grid > a > div:last-child {
+  background: transparent;
+  color: var(--book-navy);
+  border: 0;
+  border-top: 1px solid var(--book-line);
+  border-radius: 0;
+  padding: 17px 0 0;
+}
+.portal .workbook-grid > a:hover { border-color: var(--book-navy); }
+.portal .workbook-grid > a:hover > div:last-child { background: transparent; text-decoration: underline; text-underline-offset: 4px; }
+.case-workbook #step-title, .theme-problem #step-title { color: var(--book-navy); }
+.case-workbook #step-example, .theme-problem #step-example,
+.textbook-model main section > p {
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 2;
+  color: var(--book-ink);
+}
+.case-workbook #step-label, .theme-problem #step-label {
+  color: var(--book-navy);
+  background: transparent;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: .02em;
+  padding: 0;
+}
+.theme-problem > header, .textbook-model > header { background: #fff; box-shadow: none; border-color: var(--book-line); padding: 17px 24px; }
+.theme-problem > header a, .textbook-model > header a { color: var(--book-navy); }
+.theme-problem > header .bg-indigo-900 { background: transparent; border: 1px solid #aeb8bd; color: var(--book-navy); border-radius: 2px; font-size: 12px; }
+.theme-problem > header button, .theme-problem #btn-next { background: var(--book-navy); box-shadow: none; border-radius: 3px; }
+.theme-problem > header button:hover, .theme-problem #btn-next:hover { background: #203544; }
+.theme-problem #step-nav-bar button { background: transparent; color: #60686e; border: 1px solid transparent; border-radius: 2px; }
+.theme-problem #step-nav-bar .active-step { color: var(--book-navy); background: #e9edef; border-color: #aeb8bd; }
+.theme-problem > main { padding: 30px 28px; gap: 32px; }
+.theme-problem main > section:first-child { gap: 0; }
+.theme-problem main > section:first-child > div { background: transparent; border: 0; border-radius: 0; box-shadow: none; padding: 26px 4px; }
+.theme-problem main > section:first-child > div:first-child { padding-top: 6px; border-bottom: 1px solid var(--book-line); }
+.theme-problem #step-title { font-size: 27px; margin: 18px 0 12px; }
+.theme-problem #step-rule { color: #48555f; line-height: 1.95; }
+.theme-problem #step-time { color: #626e76; font-family: inherit; }
+.theme-problem main h3, .theme-problem main h4 { color: var(--book-navy); letter-spacing: .03em; border-color: var(--book-line); }
+.theme-problem main h3 > span { display: none; }
+.theme-problem #step-example { background: #fff; border: 1px solid var(--book-line); border-left: 3px solid #a6b1b8; border-radius: 0; box-shadow: none; padding: 18px 20px; }
+.theme-problem #step-tips > div { background: transparent; border: 0; padding: 0; margin: 0 0 10px; color: #4c5861; font-size: 13px; font-weight: 400; line-height: 1.8; }
+.theme-problem #step-tips > div > span { color: #62727c; }
+.theme-problem main > section:last-child > div { border-color: #bcc5ca; border-radius: 3px; box-shadow: none; }
+.theme-problem main > section:last-child > div > div:first-child { background: #fff; border-color: var(--book-line); padding: 17px 22px; }
+.theme-problem #draft-input { background: #fff; color: var(--book-ink); padding: 26px; font-size: 15px; line-height: 2; }
+.theme-problem #draft-input::placeholder { color: #75818a; }
+.theme-problem #draft-input:focus { box-shadow: inset 2px 0 0 var(--book-navy); }
+.theme-problem #step-nav { background: #f6f7f4; border-color: var(--book-line); padding: 15px 20px; box-shadow: none; }
+.theme-problem #char-count { color: #68757e; }
+.theme-problem button:focus-visible, .theme-problem a:focus-visible,
+.textbook-model a:focus-visible { outline: 2px solid var(--book-navy); outline-offset: 3px; }
+.textbook-model header span { background: #eef0ef; color: var(--book-navy); border-radius: 0; }
+.textbook-model main > div { border-radius: 0; box-shadow: none; border-color: var(--book-line); }
+.textbook-model main > div > div:first-child { background: #f0f1ee; border-color: var(--book-line); border-top: 3px solid var(--book-navy); }
+.textbook-model main > div > div:first-child span { color: #53616b; }
+.textbook-model main h2 { color: var(--book-navy); line-height: 1.65; }
+.textbook-model main section { padding-bottom: 24px; border-bottom: 1px solid var(--book-line); }
+.textbook-model main section:last-child { padding-bottom: 0; border-bottom: 0; }
+.textbook-model main section > div { align-items: baseline; gap: 14px; margin-bottom: 14px; }
+.textbook-model main section > div > span { background: transparent; color: var(--book-navy); padding: 0; font: 18px Georgia, serif; white-space: nowrap; text-transform: none; }
+.textbook-model main section h3 { color: var(--book-navy); font-size: 14px; letter-spacing: .02em; }
+.textbook-model main section > p { border: 0; padding-left: 0; }
+.textbook-model main section ul { background: #f1f2ef; border-radius: 0; font-weight: 500; line-height: 1.9; }
+.textbook-model main > div > div:last-child { background: #f4f5f2; border-color: var(--book-line); }
+.textbook-model main a { background: var(--book-navy); border-radius: 3px; box-shadow: none; }
+.textbook-model main a:hover { background: #203544; box-shadow: none; }
+.textbook-model footer { margin: 12px 0 24px; color: #65727a; }
+@media (min-width: 1024px) {
+  .theme-problem main > section:first-child { width: 44%; }
+  .theme-problem main > section:last-child { width: 56%; }
+}
+@media (max-width: 1023px) {
+  .theme-problem > main { padding: 22px 20px 100px; gap: 8px; }
+  .theme-problem #step-nav { padding-bottom: max(15px, env(safe-area-inset-bottom)); }
+  .theme-problem #draft-input { min-height: 42vh; }
+}
+@media (max-width: 639px) {
+  .theme-problem > header, .textbook-model > header { padding: 12px 14px; }
+  .theme-problem header h1, .textbook-model header h1 { font-size: 14px; }
+  .theme-problem header .bg-indigo-900 { display: none; }
+  .theme-problem header a { margin-right: 0; }
+  .theme-problem > main { padding: 20px 16px 100px; }
+  .theme-problem #step-title { font-size: 23px; }
+  .textbook-model header > div { flex-wrap: wrap; gap: 12px; }
+}

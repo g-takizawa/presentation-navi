@@ -42,6 +42,15 @@ function updateContent() {
   setText('step-time', s.time);
   setText('step-title', s.title);
   setText('step-rule', s.rule);
+  const ruleElement = document.getElementById('step-rule');
+  if (ruleElement) {
+    const sentenceEnd = s.rule.indexOf('。');
+    const emphasisEnd = sentenceEnd === -1 ? s.rule.length : sentenceEnd + 1;
+    const emphasis = document.createElement('strong');
+    emphasis.className = 'key-sentence';
+    emphasis.textContent = s.rule.slice(0, emphasisEnd);
+    ruleElement.replaceChildren(emphasis, document.createTextNode(s.rule.slice(emphasisEnd)));
+  }
   setText('step-example', s.example);
 
   // Tips

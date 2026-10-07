@@ -1,0 +1,121 @@
+/* Quiet, paper-like styling for the case workbook. */
+:root {
+  color-scheme: light;
+  --case-ink: #25313b;
+  --case-muted: #606b73;
+  --case-line: #d8dbda;
+  --case-accent: #344f61;
+  --case-accent-strong: #263e4e;
+  --case-accent-soft: #e9eef0;
+  --case-page: #f3f3f0;
+}
+.case-workbook .app-header { background: #fff; padding: 17px 28px; }
+.case-workbook .brand-mark {
+  background: transparent;
+  color: var(--case-accent);
+  border: 1px solid #aeb8bd;
+  border-radius: 2px;
+  font-size: 12px;
+}
+.case-workbook .app-subtitle { color: #67737c; margin-top: 4px; }
+.case-workbook .app-main { gap: 32px; padding: 30px 28px; }
+.case-workbook .reference-pane { gap: 0; }
+.case-workbook .overview-card,
+.case-workbook .example-card,
+.case-workbook .workspace-card {
+  border-radius: 3px;
+  box-shadow: none;
+}
+.case-workbook .overview-card {
+  padding: 6px 4px 28px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--case-line);
+  border-radius: 0;
+}
+.case-workbook #step-label {
+  background: transparent;
+  color: var(--case-accent);
+  border-radius: 0;
+  padding: 0;
+  font-size: 11px;
+}
+.case-workbook .time-label { color: #626e76; }
+.case-workbook #step-title { font-size: 27px; margin: 18px 0 12px; }
+.case-workbook #step-rule { color: #48555f; line-height: 1.95; }
+.case-workbook .example-card {
+  background: transparent;
+  border: 0;
+  padding: 26px 4px;
+}
+.case-workbook .section-label { color: #495660; letter-spacing: .04em; }
+.case-workbook .section-label-mark { display: none; }
+.case-workbook #step-example {
+  background: #fff;
+  border: 1px solid #dedfda;
+  border-left: 3px solid #a6b1b8;
+  border-radius: 0;
+  padding: 18px 20px;
+  color: #303b43;
+  line-height: 2;
+}
+.case-workbook .tips-label { color: #515d65; border-color: #d8dbda; letter-spacing: .03em; }
+.case-workbook .tips-icon { color: #62727c; border-color: #9ba7ae; }
+.case-workbook #step-tips > div { color: #4c5861; font-weight: 400; }
+.case-workbook #step-tips > div > span { color: #72818a; }
+.case-workbook .workspace-card { border-color: #bcc5ca; background: #fff; }
+.case-workbook .workspace-header { background: #fff; padding: 17px 22px; }
+.case-workbook .workspace-title { font-size: 13px; letter-spacing: .02em; }
+.case-workbook .autosave-label { color: #626e76; }
+.case-workbook #draft-input { background: #fff; padding: 26px; line-height: 2; }
+.case-workbook #draft-input::placeholder { color: #75818a; }
+.case-workbook #draft-input:focus { box-shadow: inset 2px 0 0 #547184; }
+.case-workbook .action-bar { background: #fafbf9; padding: 15px 20px; }
+.case-workbook #char-count { color: #68757e; }
+.case-workbook .export-button {
+  background: #fff;
+  border: 1px solid #aebbc3;
+  color: #344f61;
+  border-radius: 3px;
+  box-shadow: none;
+}
+.case-workbook .export-button:hover { background: #edf1f3; }
+.case-workbook #btn-next { border-radius: 3px; padding: 10px 20px; }
+.case-workbook #step-nav-bar { gap: 4px; }
+.case-workbook #step-nav-bar button {
+  background: transparent;
+  border-color: transparent;
+  border-radius: 2px;
+  color: #63717a;
+  height: 30px;
+  width: 30px;
+}
+.case-workbook #step-nav-bar .active-step {
+  background: #e4ebef;
+  border-color: #aebec8;
+  color: #253f50;
+  box-shadow: none;
+}
+.case-workbook button:focus-visible, .case-workbook a:focus-visible {
+  outline: 2px solid #344f61;
+  outline-offset: 3px;
+}
+@media (min-width: 1024px) {
+  .case-workbook .reference-pane { width: 44%; }
+  .case-workbook .workspace-pane { width: 56%; }
+}
+@media (max-width: 1023px) {
+  .case-workbook .app-main { padding: 22px 20px 100px; gap: 8px; }
+  .case-workbook .reference-pane { padding-bottom: 0; }
+  .case-workbook .action-bar {
+    box-shadow: none;
+    padding-bottom: max(15px, env(safe-area-inset-bottom));
+  }
+}
+@media (max-width: 639px) {
+  .case-workbook .app-header { padding: 12px 14px; }
+  .case-workbook .app-main { padding: 20px 16px 100px; }
+  .case-workbook #step-title { font-size: 23px; }
+  .case-workbook .workspace-header { padding: 15px 16px; }
+  .case-workbook #draft-input { padding: 20px; }
+}

@@ -12,28 +12,419 @@
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="favicon.png">
   <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --case-ink: #172033;
+      --case-muted: #657185;
+      --case-line: #dce2e9;
+      --case-accent: #24537a;
+      --case-accent-strong: #193f60;
+      --case-accent-soft: #edf3f7;
+      --case-warm: #8d5a1f;
+      --case-warm-soft: #faf8f3;
+      --case-surface: #ffffff;
+      --case-page: #f4f6f8;
+    }
+
+    body.case-workbook {
+      background: var(--case-page);
+      color: var(--case-ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", Meiryo, sans-serif;
+      letter-spacing: .01em;
+    }
+
+    .case-workbook .app-header {
+      background: rgba(255, 255, 255, .96);
+      border-color: var(--case-line);
+      box-shadow: none;
+      padding: 13px 24px;
+    }
+
+    .case-workbook .app-header-inner {
+      min-height: 42px;
+    }
+
+    .case-workbook .back-link {
+      color: var(--case-muted);
+      font-size: 13px;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+
+    .case-workbook .back-link:hover {
+      color: var(--case-accent);
+    }
+
+    .case-workbook .brand-mark {
+      align-items: center;
+      background: var(--case-ink);
+      border-radius: 7px;
+      display: flex;
+      font-size: 14px;
+      height: 34px;
+      justify-content: center;
+      letter-spacing: .04em;
+      padding: 0 9px;
+    }
+
+    .case-workbook .app-title {
+      color: var(--case-ink);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: .01em;
+      line-height: 1.35;
+    }
+
+    .case-workbook .app-subtitle {
+      color: #8390a2;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .04em;
+      margin-top: 1px;
+      text-transform: none;
+    }
+
+    .case-workbook #step-nav-bar {
+      gap: 5px;
+    }
+
+    .case-workbook #step-nav-bar button {
+      border-color: var(--case-line);
+      border-radius: 7px;
+      border-width: 1px;
+      color: #7c8797;
+      font-weight: 600;
+      height: 29px;
+      width: 29px;
+    }
+
+    .case-workbook #step-nav-bar button:hover {
+      border-color: #aeb9c6;
+      color: var(--case-ink);
+    }
+
+    .case-workbook #step-nav-bar .active-step {
+      background: var(--case-accent);
+      border-color: var(--case-accent);
+      color: #fff;
+      box-shadow: 0 2px 5px rgba(36, 83, 122, .18);
+    }
+
+    .case-workbook .export-button {
+      background: var(--case-accent);
+      border-radius: 7px;
+      box-shadow: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 13px;
+    }
+
+    .case-workbook .export-button:hover {
+      background: var(--case-accent-strong);
+    }
+
+    .case-workbook .app-main {
+      gap: 20px;
+      padding: 20px 24px 24px;
+    }
+
+    .case-workbook .reference-pane,
+    .case-workbook .workspace-pane {
+      gap: 14px;
+    }
+
+    .case-workbook .overview-card,
+    .case-workbook .example-card,
+    .case-workbook .workspace-card {
+      border-color: var(--case-line);
+      border-radius: 10px;
+      box-shadow: 0 1px 2px rgba(23, 32, 51, .035);
+    }
+
+    .case-workbook .overview-card {
+      padding: 22px 24px 23px;
+    }
+
+    .case-workbook .step-meta {
+      margin-bottom: 14px;
+    }
+
+    .case-workbook #step-label {
+      background: var(--case-accent-soft);
+      border-radius: 4px;
+      color: var(--case-accent-strong);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      padding: 5px 7px;
+    }
+
+    .case-workbook .time-label {
+      color: #8793a3;
+      font-family: inherit;
+      font-size: 11px;
+      letter-spacing: .02em;
+    }
+
+    .case-workbook #step-title {
+      color: var(--case-ink);
+      font-size: 25px;
+      font-weight: 700;
+      letter-spacing: -.01em;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+
+    .case-workbook #step-rule {
+      color: #536174;
+      font-size: 14px;
+      line-height: 1.85;
+    }
+
+    .case-workbook .example-card {
+      background: var(--case-warm-soft);
+      padding: 22px 24px;
+    }
+
+    .case-workbook .section-label {
+      color: var(--case-warm);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      margin-bottom: 13px;
+    }
+
+    .case-workbook .section-label-mark {
+      background: currentColor;
+      border-radius: 50%;
+      height: 5px;
+      width: 5px;
+    }
+
+    .case-workbook #step-example {
+      background: rgba(255, 255, 255, .72);
+      border: 0;
+      border-left: 2px solid #c99c5d;
+      border-radius: 0 6px 6px 0;
+      box-shadow: none;
+      color: #303847;
+      font-size: 14px;
+      font-style: normal;
+      line-height: 1.9;
+      margin-bottom: 20px;
+      padding: 12px 14px;
+    }
+
+    .case-workbook .tips-label {
+      border-color: #e7ddcf;
+      border-width: 1px 0 0;
+      color: #5f5549;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      margin-bottom: 11px;
+      padding-top: 17px;
+    }
+
+    .case-workbook .tips-icon {
+      border: 1px solid #b89a73;
+      border-radius: 50%;
+      color: var(--case-warm);
+      display: inline-flex;
+      font-size: 9px;
+      height: 16px;
+      justify-content: center;
+      line-height: 14px;
+      width: 16px;
+    }
+
+    .case-workbook #step-tips {
+      display: grid;
+      gap: 8px;
+    }
+
+    .case-workbook #step-tips > div {
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      color: #475264;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.75;
+      margin: 0;
+      padding: 0;
+    }
+
+    .case-workbook #step-tips > div > span {
+      color: #b47a35;
+      font-size: 14px;
+      margin-top: -1px;
+    }
+
+    .case-workbook .workspace-card {
+      border-color: #cfd8e2;
+      box-shadow: 0 4px 14px rgba(23, 32, 51, .055);
+    }
+
+    .case-workbook .workspace-header {
+      background: #f8fafb;
+      border-color: var(--case-line);
+      justify-content: space-between;
+      padding: 13px 17px;
+    }
+
+    .case-workbook .workspace-title {
+      color: var(--case-ink);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: none;
+    }
+
+    .case-workbook .autosave-label {
+      color: #8a95a5;
+      font-size: 10px;
+    }
+
+    .case-workbook #draft-input {
+      caret-color: var(--case-accent);
+      color: var(--case-ink);
+      font-size: 15px;
+      line-height: 1.9;
+      padding: 24px;
+    }
+
+    .case-workbook #draft-input::placeholder {
+      color: #abb4c1;
+    }
+
+    .case-workbook #draft-input:focus {
+      box-shadow: inset 3px 0 0 var(--case-accent);
+    }
+
+    .case-workbook .action-bar {
+      background: #f8fafb;
+      border-color: var(--case-line);
+      padding: 12px 16px;
+    }
+
+    .case-workbook #btn-prev {
+      color: #647185;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .case-workbook #btn-prev:hover {
+      color: var(--case-ink);
+    }
+
+    .case-workbook #char-count {
+      color: #8b96a5;
+      font-family: inherit;
+      font-size: 10px;
+      letter-spacing: .06em;
+    }
+
+    .case-workbook #btn-next {
+      background: var(--case-accent);
+      border-radius: 7px;
+      box-shadow: none;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 9px 18px;
+    }
+
+    .case-workbook #btn-next:hover {
+      background: var(--case-accent-strong);
+    }
+
+    @media (max-width: 1023px) {
+      .case-workbook .app-header {
+        padding: 11px 16px;
+      }
+
+      .case-workbook .app-main {
+        gap: 14px;
+        padding: 14px 14px 82px;
+      }
+
+      .case-workbook .overview-card,
+      .case-workbook .example-card {
+        padding: 19px 20px;
+      }
+
+      .case-workbook .action-bar {
+        box-shadow: 0 -4px 16px rgba(23, 32, 51, .08);
+      }
+    }
+
+    @media (max-width: 639px) {
+      .case-workbook .back-link {
+        margin-right: 2px;
+      }
+
+      .case-workbook .back-link span,
+      .case-workbook .brand-mark,
+      .case-workbook .app-subtitle {
+        display: none;
+      }
+
+      .case-workbook .app-title {
+        font-size: 14px;
+      }
+
+      .case-workbook .export-button {
+        height: 34px;
+        padding: 0 10px;
+      }
+
+      .case-workbook .export-button span {
+        display: none;
+      }
+
+      .case-workbook #step-title {
+        font-size: 21px;
+      }
+
+      .case-workbook #draft-input {
+        min-height: 42vh;
+        padding: 20px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .case-workbook *,
+      .case-workbook *::before,
+      .case-workbook *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="case-editorial.css">
+  <link rel="stylesheet" href="textbook.css">
 </head>
 
-<body class="flex flex-col h-screen overflow-hidden text-slate-800">
+<body class="case-workbook flex flex-col h-screen overflow-hidden text-slate-800">
 
   <!-- Header -->
-  <header class="bg-white border-b border-slate-200 px-6 py-3 flex-none shadow-sm z-20">
-    <div class="max-w-screen-2xl mx-auto flex items-center justify-between">
+  <header class="app-header bg-white border-b border-slate-200 px-6 py-3 flex-none shadow-sm z-20">
+    <div class="app-header-inner max-w-screen-2xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
         <a href="スタート.html"
-          class="flex items-center gap-1 text-slate-500 hover:text-blue-600 mr-4 transition-colors font-bold text-sm"
+          class="back-link flex items-center gap-1 text-slate-500 hover:text-blue-600 mr-4 transition-colors font-bold text-sm"
           title="トップページへ戻る">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="w-4 h-4">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
           </svg>
-          Home
+          <span>一覧へ</span>
         </a>
-        <div class="bg-slate-900 text-white p-2 rounded-lg font-bold text-lg">H&P</div>
+        <div class="brand-mark bg-slate-900 text-white p-2 rounded-lg font-bold text-lg">H&amp;P</div>
         <div>
-          <h1 class="text-lg font-bold">症例プレゼン・ワークブック</h1>
-          <p class="hidden sm:block text-[10px] text-slate-500 font-medium uppercase tracking-tighter">全ステップ統合ダウンロード機能搭載
+          <h1 class="app-title text-lg font-bold">症例プレゼンテーション</h1>
+          <p class="app-subtitle hidden sm:block text-[10px] text-slate-500 font-medium uppercase tracking-tighter">問診からプランまで・全9ステップ
           </p>
         </div>
       </div>
@@ -44,8 +435,11 @@
 
       <div class="flex items-center gap-3">
         <button onclick="downloadFullDraft()"
-          class="bg-blue-600 text-white px-3 sm:px-4 py-1.5 rounded-md text-sm font-bold hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-sm">
-          💾 <span class="hidden sm:inline">全原稿をダウンロード</span>
+          class="export-button bg-blue-600 text-white px-3 sm:px-4 py-1.5 rounded-md text-sm font-bold hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-sm">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M7.5 10.5 12 15m0 0 4.5-4.5M12 15V3" />
+          </svg>
+          <span class="hidden sm:inline">原稿を書き出す</span>
         </button>
       </div>
     </div>
@@ -53,24 +447,24 @@
 
   <!-- Main Content -->
   <main
-    class="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden max-w-screen-2xl mx-auto w-full p-4 gap-4">
+    class="app-main flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden max-w-screen-2xl mx-auto w-full p-4 gap-4">
 
     <!-- Left Pane: Reference -->
-    <section class="w-full lg:w-1/2 flex flex-col gap-4 lg:overflow-y-auto lg:no-scrollbar pb-6 lg:min-h-0">
-      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex-none">
-        <div class="flex items-center justify-between mb-4">
+    <section class="reference-pane w-full lg:w-1/2 flex flex-col gap-4 lg:overflow-y-auto lg:no-scrollbar pb-6 lg:min-h-0">
+      <div class="overview-card bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex-none">
+        <div class="step-meta flex items-center justify-between mb-4">
           <span id="step-label"
             class="text-[10px] font-bold bg-blue-100 text-blue-700 px-2 py-1 rounded uppercase tracking-widest">Step
             1</span>
-          <span id="step-time" class="text-xs text-slate-400 font-mono">30s</span>
+          <span class="time-label">目安 <span id="step-time">30s</span></span>
         </div>
         <h2 id="step-title" class="text-2xl font-bold mb-2"></h2>
         <p id="step-rule" class="text-sm text-slate-600 leading-relaxed"></p>
       </div>
 
-      <div class="bg-amber-50 rounded-xl border border-amber-200 p-6 flex-1 flex flex-col">
-        <h3 class="text-xs font-bold text-amber-800 uppercase tracking-widest mb-4 flex items-center gap-2">
-          <span class="w-2 h-2 bg-amber-500 rounded-full"></span> お手本
+      <div class="example-card bg-amber-50 rounded-xl border border-amber-200 p-6 flex-1 flex flex-col">
+        <h3 class="section-label text-xs font-bold text-amber-800 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <span class="section-label-mark w-2 h-2 bg-amber-500 rounded-full"></span> 記載例
         </h3>
         <div id="step-example"
           class="text-slate-900 leading-relaxed italic text-sm mb-6 border-l-4 border-amber-300 pl-4 py-2 bg-white rounded shadow-sm">
@@ -78,8 +472,8 @@
         </div>
 
         <h4
-          class="text-xs font-bold text-amber-900 mb-3 border-t-2 border-amber-300 pt-4 uppercase tracking-widest flex items-center gap-2">
-          <span class="text-base">💡</span> Clinical Tips
+          class="tips-label text-xs font-bold text-amber-900 mb-3 border-t-2 border-amber-300 pt-4 uppercase tracking-widest flex items-center gap-2">
+          <span class="tips-icon" aria-hidden="true">i</span> 臨床上のポイント
         </h4>
         <div id="step-tips" class="space-y-3">
           <!-- Tip list -->
@@ -88,16 +482,17 @@
     </section>
 
     <!-- Right Pane: Workspace -->
-    <section class="w-full lg:w-1/2 flex flex-col gap-4 min-h-[50vh] lg:min-h-0">
-      <div class="bg-white rounded-xl shadow-lg border border-blue-200 flex-1 flex flex-col overflow-hidden">
-        <div class="p-4 bg-blue-50 border-b border-blue-100 flex items-center flex-none">
-          <h3 class="text-xs font-bold text-blue-800 uppercase tracking-widest">Your Draft</h3>
+    <section class="workspace-pane w-full lg:w-1/2 flex flex-col gap-4 min-h-[50vh] lg:min-h-0">
+      <div class="workspace-card bg-white rounded-xl shadow-lg border border-blue-200 flex-1 flex flex-col overflow-hidden">
+        <div class="workspace-header p-4 bg-blue-50 border-b border-blue-100 flex items-center flex-none">
+          <h3 class="workspace-title text-xs font-bold text-blue-800 uppercase tracking-widest">入力欄</h3>
+          <span class="autosave-label">この端末に自動保存</span>
         </div>
-        <textarea id="draft-input" oninput="saveDraft()"
+        <textarea id="draft-input" aria-label="症例プレゼンテーションの原稿" oninput="saveDraft()"
           class="flex-1 p-6 text-base leading-relaxed text-slate-800 outline-none resize-none placeholder:text-slate-300"
-          placeholder="お手本を参考に、自分の担当症例について書き込んでください..."></textarea>
+          placeholder="担当症例の原稿を入力"></textarea>
 
-        <div id="step-nav" class="p-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center flex-none">
+        <div id="step-nav" class="action-bar p-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center flex-none">
           <button onclick="prevStep()" id="btn-prev"
             class="text-sm font-bold text-slate-400 hover:text-slate-800 disabled:opacity-30">← PREV</button>
           <span id="char-count" class="text-[10px] text-slate-400 font-mono tracking-widest">0 CHARS</span>
@@ -113,65 +508,65 @@
     const steps = [
       {
         label: "Step 1", title: "Opening Statement", time: "30s",
-        rule: "年齢、性別、最重要既往・併存症（今回の問題に関連するもの）、主訴を1文で。聴衆が瞬時に臨床的イメージを構築できることが目標。",
+        rule: "年齢、性別、今回の問題に関わる既往歴・併存症、主訴を短くまとめる。冒頭で症例の概要を述べる。",
         example: "「2型糖尿病の既往があり、喫煙歴を有する77歳男性。3日前からの湿性咳嗽と呼吸困難を主訴に来院されました。」",
-        tips: ["併存症として糖尿病がある場合、感染症への感受性やステロイド使用による高血糖を示唆するため、Openingで提示すべきです。", "名前は不要。医学的なプロファイルのみ提示。"],
+        tips: ["この例では、併存症として糖尿病を冒頭に記載している。", "氏名は記載せず、症例の説明に必要な情報に絞る。"],
         key: "final_workbook_step_1"
       },
       {
         label: "Step 2", title: "現病歴 (HPI)", time: "2:30",
-        rule: "受診までの経過を『相対時間（〜日前）』で記述する。症状の性状(OPQRST)に加え、起坐呼吸などの重要な陰性所見を配置する。",
+        rule: "受診までの経過を「何日前から」で記載する。症状の経過や性状と、鑑別に関わる陰性所見を述べる。",
         example: "「3日前より湿性咳嗽が出現し、2日前より労作時呼吸困難を認めました。昨日より発熱、食思不振、体動困難となり受診。起坐呼吸、冷汗、下肢浮腫などは認めません。糖尿病の自己管理は良好でした。」",
-        tips: ["食思不振・体動困難の提示は『重症度・入院適応』。", "心不全を否定するための陰性所見（起坐呼吸なし等）を含めた。"],
+        tips: ["症状に加え、食事や動作への影響も述べる。", "この例では、陰性所見として起坐呼吸や下肢浮腫がないことを記載している。"],
         key: "final_workbook_step_2"
       },
       {
         label: "Step 3", title: "既往歴・併存症", time: "30s",
-        rule: "今回の鑑別に関連するものを優先。カルテには全て記載するが、プレゼンでは情報の取捨選択を行う。薬剤歴、アレルギーも含める。",
+        rule: "今回の鑑別に関わる既往歴・併存症を優先して述べる。薬剤歴とアレルギーも記載する。",
         example: "「併存症に2型糖尿病（罹病期間10年）、高血圧があります。内服はメトホルミン、ダパグリフロジン、アムロジピン。薬剤アレルギーはありません。」",
         tips: ["メトホルミンとSGLT2阻害薬（ダパグリフロジン）は、急性期やsick dayには中止・インスリン切り替えの検討が必要な薬剤です。"],
         key: "final_workbook_step_3"
       },
       {
         label: "Step 4", title: "生活歴 (Social History)", time: "30s",
-        rule: "呼吸器疾患では特に重要。喫煙歴（Brinkman Index + 現喫煙状況）、職業、ペット、住環境など。",
+        rule: "喫煙歴、職業、動物との接触、住環境を記載する。喫煙歴は本数・年数と現在の喫煙状況を述べる。",
         example: "「喫煙歴は1日20本×55年、現喫煙者。職歴は事務職。粉塵暴露歴や鳥類の飼育歴はありません。」",
         tips: ["COPDを疑う場合『喫煙者であること』を明記するのが重要です。"],
         key: "final_workbook_step_4"
       },
       {
         label: "Step 5", title: "身体所見 (Objective)", time: "1:00",
-        rule: "バイタルと全身状態から開始。鑑別に関係するシステム（呼吸器・循環器）を中心に。呼吸数は大切。また、正常であることを期待する『陰性所見』も示す。",
+        rule: "バイタルサインと全身状態から述べる。呼吸数を含め、鑑別に関わる身体所見と陰性所見を記載する。",
         example: "「BP 140/85, HR 95, BT 38.2, RR 24, SpO2 88%(RA)。軽度苦悶様。両肺野にwheezesを聴取。JVP怒張なし、下肢浮腫なし。」",
-        tips: ["wheezesの存在を強調。", "心不全を否定する陰性所見（JVP・浮腫なし）を明言し、呼吸器疾患の可能性を考慮に入れます。"],
+        tips: ["この例では、聴診で認めた喘鳴を記載している。", "陽性所見に加え、頸静脈怒張や下肢浮腫がないことも述べる。"],
         key: "final_workbook_step_5"
       },
       {
         label: "Step 6", title: "検査所見 (Labs/Imaging)", time: "1:00",
-        rule: "異常値を主に示す。画像は『どこに何があるか』を言語化。D-dimer/BNP陰性など、臨床推論のきっかけとなる所見を出す。",
+        rule: "診断や重症度の評価に関わる検査所見を述べる。画像所見は部位と所見を記載し、鑑別に関わる正常所見も含める。",
         example: "「X線で過膨張を認めますが浸潤影なし。CTで気腫性変化と気管支壁肥厚を認めます。PaO2低下、PaCO2 48mmHg、WBC11000、CRPは8と上昇。D-dimerおよびBNPは正常範囲内です。」",
-        tips: ["BNP/D-dimerが正常であることは、アセスメントで心不全/PEを論理的に否定するための強力な証拠です。"],
+        tips: ["検査結果と、その結果を踏まえた評価を分けて述べる。診断の根拠はアセスメントにまとめる。"],
         key: "final_workbook_step_6"
       },
       {
         label: "Step 7", title: "プロブレムリスト", time: "30s",
-        rule: "確定していない診断名は書かず、症候名で記載。主訴に関連する項目を #1 に挙げる。",
+        rule: "診断が確定していない問題は症候名で記載する。主訴に関連する項目を #1 に挙げる。",
         example: "「#1. wheezesを伴うII型急性呼吸不全、#2. 2型糖尿病、#3. 喫煙歴 です。」",
         tips: ["未診断の段階で #1 COPD急性増悪 と書かない。"],
         key: "final_workbook_step_7"
       },
       {
         label: "Step 8", title: "アセスメント", time: "2:00",
-        rule: "Summary Statementから開始。最も可能性の高い診断の根拠、次いで鑑別（除外した理由）を述べる。",
+        rule: "症例の要約に続けて、考えている診断と根拠を述べる。他の鑑別診断についても、支持する所見と否定的な所見を整理する。",
         example: "「喫煙歴、気腫性変化、wheezesから、背景にCOPDが存在し、感染による急性増悪（AE-COPD）を第一に考えます。心不全や肺塞栓症は否定的です。#2 についてはステロイド使用による高血糖増悪リスクを考慮します。」",
-        tips: ["『〜と考えます』と断定的に述べる。", "併存症（糖尿病）への配慮を含めることで、臨床医としての視点の広さを示せます。"],
+        tips: ["所見と判断を分け、「〜から、〜と考えます」と述べる。", "併存症についても、今回の治療との関係を述べる。"],
         key: "final_workbook_step_8"
       },
       {
         label: "Step 9", title: "プラン", time: "30s",
-        rule: "診断・治療・教育プランを具体的に。特に糖尿病薬の具体的調整（中止薬・代替療法）を明記する。",
+        rule: "検査、治療、患者への説明の予定を具体的に述べる。薬剤を変更する場合は、中止する薬剤と代わりの治療を記載する。",
         example: "「SpO2 88-92%目標で酸素投与。喀痰検査提出後にABC療法（抗菌薬はセフトリアキソン2g/day・SA吸入・ステロイドはソル・メドロール40mgx3/day）開始し病態が安定すればLABA/LAMA吸入薬の導入を検討します。#2 はメトホルミン・ダパグリフロジンを中止し、スライディングスケール対応とし、経口摂取が安定すれば経口薬に変更予定。禁煙指導と退院前に必要なワクチン接種について説明を行います。」",
-        tips: ["SGLT2阻害薬の中止はシックデイ予防に重要。", "禁煙やワクチン等の予防的介入を含めるのが岸本メソッド。"],
+        tips: ["薬剤の変更について、方針と理由を述べる。", "禁煙指導やワクチン接種など、退院前に説明する内容も記載する。"],
         key: "final_workbook_step_9"
       }
     ];
